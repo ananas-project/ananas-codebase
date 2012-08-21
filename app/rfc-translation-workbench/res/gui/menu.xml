@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bp:blueprint xmlns:bp="xmlns:ananas:blueprint:base"
+	xmlns:awt="xmlns:ananas:blueprint:awt" xmlns:swing="xmlns:ananas:blueprint:swing">
+
+	<bp:import type="class:NamespaceLoader"
+		value="ananas.lib.blueprint.elements.swing.NamespaceLoader" />
+
+	<bp:import type="class:NamespaceLoader"
+		value="ananas.lib.blueprint.elements.awt.NamespaceLoader" />
+
+	<bp:content xmlns="xmlns:ananas:blueprint:swing">
+
+		<JMenuBar>
+		</JMenuBar>
+
+
+		<JMenuBar>
+		</JMenuBar>
+
+		<JMenuBar id="menu_bar">
+
+			<JMenu label="File">
+				<JMenuItem label="New ..." command="file_new" />
+				<JSeparator />
+				<JMenuItem label="Exit" />
+			</JMenu>
+
+			<JMenu label="Edit">
+				<JMenuItem label="Cut" />
+				<JMenuItem label="Copy" />
+				<JMenuItem label="Paste" />
+				<JSeparator />
+				<JMenu label="Find">
+					<JMenuItem label="Find in Document" />
+					<JMenuItem label="Find in Directory" />
+				</JMenu>
+				<JSeparator />
+				<JMenuItem text="Set Original Text ..." />
+			</JMenu>
+
+			<JMenu label="View">
+				<JMenuItem label="Dictionary View" />
+			</JMenu>
+
+
+			<JMenu label="Window">
+				<JMenuItem label="Close Window" />
+			</JMenu>
+
+			<JMenu label="Help">
+				<JMenuItem label="Help Content" />
+				<JSeparator />
+				<JMenuItem label="About" />
+			</JMenu>
+
+
+
+		</JMenuBar>
+
+
+	</bp:content>
+</bp:blueprint>

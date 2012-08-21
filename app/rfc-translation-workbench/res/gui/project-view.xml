@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bp:blueprint xmlns:bp="xmlns:ananas:blueprint:base"
+	xmlns:awt="xmlns:ananas:blueprint:awt" xmlns:swing="xmlns:ananas:blueprint:swing">
+
+	<bp:import type="class:NamespaceLoader"
+		value="ananas.lib.blueprint.elements.swing.NamespaceLoader" />
+
+	<bp:import type="class:NamespaceLoader"
+		value="ananas.lib.blueprint.elements.awt.NamespaceLoader" />
+
+
+	<bp:content xmlns="xmlns:ananas:blueprint:swing">
+
+		<JPanel id="root_view">
+			<awt:GridLayout columns="1" rows="1" />
+			<JScrollPane>
+				<JTextArea id="original_text_view" editable="false" />
+			</JScrollPane>
+		</JPanel>
+
+	</bp:content>
+
+</bp:blueprint>
