@@ -7,6 +7,8 @@
 	<bp:import type="class:NamespaceLoader"
 		value="ananas.lib.blueprint.elements.awt.NamespaceLoader" />
 
+	<bp:import type="class:*" id="class_demo" value="test.blueprint.Demo" />
+
 	<bp:content>
 		<JFrame xmlns="xmlns:ananas:blueprint:swing" id="root"
 			title="Blueprint DEMO" x="320" y="240" width="640" height="480">
