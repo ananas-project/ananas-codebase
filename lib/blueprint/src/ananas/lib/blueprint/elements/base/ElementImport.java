@@ -71,6 +71,9 @@ public interface ElementImport extends IElement {
 					cls = Class.forName(this.mValue);
 				} catch (ClassNotFoundException e) {
 					// e.printStackTrace();
+					System.err.println("id=" + this.getId());
+					System.err.println("type=" + this.mType);
+					System.err.println("value=" + this.mValue);
 					throw new RuntimeException(e);
 				}
 				this.mTargetClass = cls;
