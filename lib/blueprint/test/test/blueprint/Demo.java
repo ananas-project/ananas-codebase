@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import ananas.lib.blueprint.Blueprint;
 import ananas.lib.blueprint.IDocument;
 import ananas.lib.blueprint.elements.awt.IEMenuItem;
+import ananas.lib.blueprint.elements.base.ElementImport;
 import ananas.lib.blueprint.elements.swing.IEJButton;
 
 public class Demo {
@@ -25,6 +26,7 @@ public class Demo {
 
 	private static class DemoFrameCtrl {
 		private JFrame mFrame;
+		private Class<?> mImportClass;
 
 		public DemoFrameCtrl() {
 
@@ -33,6 +35,11 @@ public class Demo {
 			InputStream is = "".getClass().getResourceAsStream(path);
 			String docURI = null;
 			IDocument doc = Blueprint.getInstance().loadDocument(is, docURI);
+
+			ElementImport classImport = (ElementImport) doc
+					.findElementById("class_demo");
+			final Class<?> cls = classImport.importClass();
+			this.mImportClass = cls;
 
 			// bind listener
 
@@ -57,8 +64,10 @@ public class Demo {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 
+					Class<?> cls = DemoFrameCtrl.this.mImportClass;
+
 					javax.swing.JOptionPane.showMessageDialog(
-							DemoFrameCtrl.this.mFrame, "Yeah!");
+							DemoFrameCtrl.this.mFrame, "Yeah! | import:" + cls);
 
 				}
 			});

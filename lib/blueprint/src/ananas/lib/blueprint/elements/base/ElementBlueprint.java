@@ -36,10 +36,20 @@ public interface ElementBlueprint extends IElement {
 
 			String type = element.getType();
 			String value = element.getValue();
-			if ("class:NamespaceLoader".equals(type)) {
-				element.getOwnerDocument().getImplementation()
-						.getNamespaceRegistrar().loadNamespace(value);
+			if (type == null) {
+
+			} else if (type.equals(ElementImport.type_class)) {
+			} else if (type.equals(ElementImport.type_namespace)) {
+				this._importNS(value);
+			} else if (type.equals(ElementImport.type_namespace_old_style)) {
+				this._importNS(value);
+			} else {
 			}
+		}
+
+		private void _importNS(String value) {
+			this.getOwnerDocument().getImplementation().getNamespaceRegistrar()
+					.loadNamespace(value);
 		}
 
 		public ElementContent getContent() {

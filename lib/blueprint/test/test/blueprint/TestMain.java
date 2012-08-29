@@ -4,7 +4,8 @@ public class TestMain {
 
 	public static void main(String[] args) {
 
-		TestMDI.main(args);
+		// TestMDI.main(args);
+		Demo.main(args);
 
 	}
 
