@@ -22,6 +22,7 @@ public class NamespaceLoader implements INamespaceLoader {
 		this.registerClass(ns, "blueprint", DefaultElementBlueprint.class);
 		this.registerClass(ns, "content", DefaultElementContent.class);
 		this.registerClass(ns, "import", DefaultElementImport.class);
+		this.registerClass(ns, "key",   ElementKey .class);
 
 		return ns;
 

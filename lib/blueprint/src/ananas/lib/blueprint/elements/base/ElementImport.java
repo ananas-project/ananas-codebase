@@ -5,9 +5,10 @@ import ananas.lib.blueprint.IElement;
 
 public interface ElementImport extends IElement {
 
+	static final String type_class_old_style = "class";
+	static final String type_namespace_old_style = "class:NamespaceLoader";
 	static final String type_class = "class:*";
 	static final String type_namespace = "class:NamespaceLoader";
-	static final String type_namespace_old_style = "class:NamespaceLoader";
 
 	String getValue();
 
@@ -58,6 +59,7 @@ public interface ElementImport extends IElement {
 				return null;
 			} else if (this.mType.equals(ElementImport.type_class)) {
 			} else if (this.mType.equals(ElementImport.type_namespace)) {
+			} else if (this.mType.equals(ElementImport.type_class_old_style)) {
 			} else if (this.mType.equals(type_namespace_old_style)) {
 			} else {
 				return null;
