@@ -14,12 +14,12 @@ public class NamespaceLoader extends AbstractReflectNamespaceLoader {
 		reg.reg("field", BprField.class);
 		reg.reg("invoke", BprInvoke.class);
 
-		reg.reg("boolean", BprBaseType.class);
-		reg.reg("int", BprBaseType.class);
-		reg.reg("long", BprBaseType.class);
-		reg.reg("double", BprBaseType.class);
-		reg.reg("float", BprBaseType.class);
-		reg.reg("string", BprBaseType.class);
+		reg.reg("boolean", BprBoolean.class);
+		reg.reg("int", BprInteger.class);
+		reg.reg("long", BprLong.class);
+		reg.reg("double", BprDouble.class);
+		reg.reg("float", BprFloat.class);
+		reg.reg("string", BprString.class);
 	}
 
 }
