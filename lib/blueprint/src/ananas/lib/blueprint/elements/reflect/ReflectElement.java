@@ -10,6 +10,8 @@ public interface ReflectElement extends IElement {
 
 	IElement findElementById(String ref);
 
+	Object findTargetObjectById(String ref);
+
 	Class<?> findClass(String ref);
 
 	public class DefaultElementReflect extends DefaultElement implements
@@ -151,6 +153,12 @@ public interface ReflectElement extends IElement {
 				}
 			}
 			return null;
+		}
+
+		@Override
+		public Object findTargetObjectById(String ref) {
+			IElement element = this.findElementById(ref);
+			return element.getTarget();
 		}
 
 	}
