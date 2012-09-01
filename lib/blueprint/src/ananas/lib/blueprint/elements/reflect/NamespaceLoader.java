@@ -11,6 +11,12 @@ public class NamespaceLoader extends AbstractReflectNamespaceLoader {
 
 	@Override
 	protected void onLoad(ClassRegistrar reg) {
+
+		reg.reg("blueprint", BprBlueprint.class);
+		reg.reg("head", BprHead.class);
+		reg.reg("body", BprBody.class);
+		reg.reg("box", BprBox.class);
+		reg.reg("import", BprImport.class);
 		reg.reg("field", BprField.class);
 		reg.reg("invoke", BprInvoke.class);
 
@@ -20,6 +26,7 @@ public class NamespaceLoader extends AbstractReflectNamespaceLoader {
 		reg.reg("double", BprDouble.class);
 		reg.reg("float", BprFloat.class);
 		reg.reg("string", BprString.class);
+
 	}
 
 }

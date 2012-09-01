@@ -38,6 +38,8 @@ class ImplNamespaceRegistrar implements INamespaceRegistrar {
 		INamespace ns = loader.load(impl);
 		String nsURI = ns.getNamespaceURI();
 		this.mNsTable.put(nsURI, ns);
+		System.out.println("load blueprint namespace : " + loader + "        ("
+				+ nsURI + ")");
 	}
 
 	@Override

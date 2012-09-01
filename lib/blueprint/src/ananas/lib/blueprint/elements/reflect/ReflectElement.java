@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 
 import ananas.lib.blueprint.DefaultElement;
 import ananas.lib.blueprint.IElement;
-import ananas.lib.blueprint.elements.base.ElementImport;
 
 public interface ReflectElement extends IElement {
 
@@ -140,7 +139,7 @@ public interface ReflectElement extends IElement {
 		@Override
 		public Class<?> findClass(String ref) {
 			if (ref.startsWith("#")) {
-				ElementImport imp = (ElementImport) this.findElementById(ref);
+				BprImport imp = (BprImport) this.findTargetObjectById(ref);
 				if (imp == null) {
 					System.err.println("cannot find import with id : " + ref);
 				}
