@@ -13,6 +13,8 @@ public interface ReflectElement extends IElement {
 
 	Class<?> findClass(String ref);
 
+	Class<?> findClass(String ref, boolean allowNull);
+
 	public class DefaultElementReflect extends DefaultElement implements
 			ReflectElement {
 
@@ -103,6 +105,7 @@ public interface ReflectElement extends IElement {
 				this.mCurrentField = null;
 				if (field == null) {
 					field = new BprField();
+					field.bind(this);
 				}
 				field.doSet(parent, child);
 			}
@@ -110,7 +113,7 @@ public interface ReflectElement extends IElement {
 		}
 
 		@Override
-		public Object createTarget() {
+		public final Object createTarget() {
 			Object target = super.createTarget();
 			_doBind(target, this);
 			return target;
@@ -140,26 +143,40 @@ public interface ReflectElement extends IElement {
 
 		@Override
 		public Class<?> findClass(String ref) {
-			if (ref.startsWith("#")) {
-				BprImport imp = (BprImport) this.findTargetObjectById(ref);
-				if (imp == null) {
-					System.err.println("cannot find import with id : " + ref);
-				}
-				return imp.importClass();
-			} else {
-				try {
-					return Class.forName(ref);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-			return null;
+			return this._findClass(ref);
 		}
 
 		@Override
 		public Object findTargetObjectById(String ref) {
 			IElement element = this.findElementById(ref);
 			return element.getTarget();
+		}
+
+		@Override
+		public Class<?> findClass(String ref, boolean allowNull) {
+			Class<?> cls = this._findClass(ref);
+			if (cls == null && (!allowNull)) {
+				throw new RuntimeException("cannot find class of : " + ref);
+			}
+			return cls;
+		}
+
+		private Class<?> _findClass(String ref) {
+			try {
+				if (ref == null) {
+					return null;
+				}
+				if (ref.startsWith("#")) {
+					BprImport imp = (BprImport) this.findTargetObjectById(ref);
+					return imp.importClass();
+				} else {
+					return Class.forName(ref);
+				}
+			} catch (Exception e) {
+				System.err.println("cannot find import with id : " + ref);
+				e.printStackTrace();
+				return null;
+			}
 		}
 
 	}

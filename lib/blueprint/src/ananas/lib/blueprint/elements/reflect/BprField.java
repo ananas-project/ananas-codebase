@@ -33,6 +33,8 @@ public class BprField {
 			String fieldName = this.mFieldName;
 			if (aClass == null) {
 				aClass = child.getClass();
+			} else {
+				aClass.hashCode();
 			}
 			if (fieldName == null) {
 				fieldName = aClass.getSimpleName();
@@ -40,6 +42,10 @@ public class BprField {
 			char ch = fieldName.toUpperCase().charAt(0);
 			String setterName = "set" + ch + fieldName.substring(1);
 			Method method = parent.getClass().getMethod(setterName, aClass);
+			if (!aClass.isInstance(child)) {
+				throw new RuntimeException(child + " is not the type of "
+						+ aClass);
+			}
 			method.invoke(parent, child);
 		} catch (Exception e) {
 			System.err
@@ -49,15 +55,23 @@ public class BprField {
 	}
 
 	private Class<?> _getClass() {
-		Class<?> cls = this.mClassCache;
-		if (cls == null) {
-			cls = this.mElement.findClass(this.mClassRef);
-			if (cls == null) {
-				System.err.println("cannot find class:" + this.mClassRef);
+		try {
+			if (this.mClassRef == null) {
+				return null;
 			}
-			this.mClassCache = cls;
+			Class<?> cls = this.mClassCache;
+			if (cls == null) {
+				cls = this.mElement.findClass(this.mClassRef, false);
+				if (cls == null) {
+					System.err.println("cannot find class:" + this.mClassRef);
+				}
+				this.mClassCache = cls;
+			}
+			return cls;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return cls;
 	}
 
 }
