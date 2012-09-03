@@ -31,8 +31,8 @@ public interface ReflectElement extends IElement {
 		}
 
 		private void _setAttr(String name, String value) {
+			Object tar = this.getTarget(true);
 			try {
-				Object tar = this.getTarget(true);
 				char ch = name.charAt(0);
 				if ('a' <= ch && ch <= 'z') {
 					ch = (char) ((ch - 'a') + 'A');
@@ -43,6 +43,8 @@ public interface ReflectElement extends IElement {
 						parameterTypes);
 				method.invoke(tar, value);
 			} catch (Exception e) {
+				System.err.println("exception while _setAttr: " + name + "="
+						+ value + "; for " + tar);
 				throw new RuntimeException(e);
 			}
 		}

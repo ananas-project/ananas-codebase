@@ -5,8 +5,9 @@ import java.lang.reflect.Method;
 public class BprField {
 
 	private ReflectElement mElement;
-	private Class<?> mClass;
+	private Class<?> mClassCache;
 	private String mFieldName;
+	private String mClassRef;
 
 	public boolean bind(Object child) {
 		if (child instanceof ReflectElement) {
@@ -22,13 +23,13 @@ public class BprField {
 	}
 
 	public void setClass(String s) {
-		this.mClass = this.mElement.findClass(s);
+		this.mClassRef = s;
 	}
 
 	public void doSet(Object parent, Object child) {
 
 		try {
-			Class<?> aClass = this.mClass;
+			Class<?> aClass = this._getClass();
 			String fieldName = this.mFieldName;
 			if (aClass == null) {
 				aClass = child.getClass();
@@ -41,8 +42,22 @@ public class BprField {
 			Method method = parent.getClass().getMethod(setterName, aClass);
 			method.invoke(parent, child);
 		} catch (Exception e) {
+			System.err
+					.println("exception while put " + child + " to " + parent);
 			throw new RuntimeException(e);
 		}
+	}
+
+	private Class<?> _getClass() {
+		Class<?> cls = this.mClassCache;
+		if (cls == null) {
+			cls = this.mElement.findClass(this.mClassRef);
+			if (cls == null) {
+				System.err.println("cannot find class:" + this.mClassRef);
+			}
+			this.mClassCache = cls;
+		}
+		return cls;
 	}
 
 }
