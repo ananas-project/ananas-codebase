@@ -2,7 +2,7 @@ package ananas.lib.blueprint.elements.reflect;
 
 import java.lang.reflect.Method;
 
-public class BprField {
+public class BprField extends BprObject {
 
 	private ReflectElement mElement;
 	private Class<?> mClassCache;

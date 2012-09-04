@@ -53,9 +53,10 @@ public interface ReflectElement extends IElement {
 
 		@Override
 		public boolean appendText(String text) {
-			Object parent = this.getTarget(true);
-			Object rlt = _doBind(parent, text);
-			if (Boolean.TRUE.equals(rlt)) {
+			IBlueprintReflectable parent = (IBlueprintReflectable) this
+					.getTarget(true);
+			boolean rlt = _doBind(parent, text);
+			if (rlt) {
 				return true;
 			}
 			return super.appendText(text);
@@ -72,7 +73,8 @@ public interface ReflectElement extends IElement {
 			if (element == null) {
 				return false;
 			} else {
-				Object parent = this.getTarget(true);
+				IBlueprintReflectable parent = (IBlueprintReflectable) this
+						.getTarget(true);
 				Object child = element.getTarget();
 				boolean rlt = this._doAppendChild(parent, child);
 				if (rlt) {
@@ -83,10 +85,11 @@ public interface ReflectElement extends IElement {
 			}
 		}
 
-		private boolean _doAppendChild(Object parent, Object child) {
+		private boolean _doAppendChild(IBlueprintReflectable parent,
+				Object child) {
 
-			Object rlt = _doBind(parent, child);
-			if (Boolean.TRUE.equals(rlt)) {
+			boolean rlt = _doBind(parent, child);
+			if (rlt) {
 				return true;
 			}
 
@@ -115,20 +118,13 @@ public interface ReflectElement extends IElement {
 		@Override
 		public final Object createTarget() {
 			Object target = super.createTarget();
-			_doBind(target, this);
+			_doBind((IBlueprintReflectable) target, this);
 			return target;
 		}
 
-		private static Object _doBind(Object parent, Object child) {
-			try {
-				String methodName = "bind";
-				Class<?> parameterTypes = Object.class;
-				Method method = parent.getClass().getMethod(methodName,
-						parameterTypes);
-				return method.invoke(parent, child);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+		private static boolean _doBind(IBlueprintReflectable parent,
+				Object child) {
+			return parent.bind(child);
 		}
 
 		@Override

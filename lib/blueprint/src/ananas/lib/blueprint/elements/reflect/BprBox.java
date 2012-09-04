@@ -1,6 +1,6 @@
 package ananas.lib.blueprint.elements.reflect;
 
-public class BprBox {
+public class BprBox extends BprObject {
 
 	// private ReflectElement mElement;
 

@@ -1,6 +1,6 @@
 package ananas.lib.blueprint.elements.reflect;
 
-public class BprImport {
+public class BprImport extends BprObject {
 
 	public static final String type_class_old_style = "class";
 	public static final String type_namespace_old_style = "class:NamespaceLoader";
