@@ -2,7 +2,7 @@ package ananas.lib.blueprint.elements.reflect;
 
 import java.util.Vector;
 
-public class BprInvoke {
+public class BprInvoke extends BprObject {
 
 	private final Vector<Object> mParamList;
 

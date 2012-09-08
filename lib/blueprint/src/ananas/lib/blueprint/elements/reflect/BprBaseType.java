@@ -1,6 +1,6 @@
 package ananas.lib.blueprint.elements.reflect;
 
-public abstract class BprBaseType {
+public abstract class BprBaseType extends BprObject {
 
 	public boolean bind(Object child) {
 		if (child instanceof ReflectElement) {
