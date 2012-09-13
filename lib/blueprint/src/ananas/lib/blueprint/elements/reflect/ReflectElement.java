@@ -53,6 +53,7 @@ public interface ReflectElement extends IElement {
 
 		@Override
 		public boolean appendText(String text) {
+			text = text.trim();
 			IBlueprintReflectable parent = (IBlueprintReflectable) this
 					.getTarget(true);
 			boolean rlt = _doBind(parent, text);
