@@ -8,6 +8,9 @@ import ananas.app.rfc_tw.model.IDictionary;
 public class BprRFCTW extends BprObjectBase {
 
 	private BprOriginal mOriginal;
+	private BprSentences mSentences;
+	private BprWords mWords;
+	private BprDictionary mDictionary;
 
 	public IDictionary getDict() {
 		// TODO Auto-generated method stub
@@ -43,4 +46,17 @@ public class BprRFCTW extends BprObjectBase {
 	public void setBprOriginal(BprOriginal original) {
 		this.mOriginal = original;
 	}
+
+	public void setBprDictionary(BprDictionary dict) {
+		this.mDictionary = dict;
+	}
+
+	public void setBprWords(BprWords words) {
+		this.mWords = words;
+	}
+
+	public void setBprSentences(BprSentences sentences) {
+		this.mSentences = sentences;
+	}
+
 }
