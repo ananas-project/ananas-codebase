@@ -1,8 +1,10 @@
 package ananas.app.rfc_tw.model;
 
-import ananas.app.rfc_tw.event.DefaultEvent;
-import ananas.app.rfc_tw.event.DefaultEventDispatcher;
-import ananas.app.rfc_tw.event.IEventDispatcher;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import ananas.app.rfc_tw.event.IEventListener;
 
 public interface IProject {
@@ -17,47 +19,17 @@ public interface IProject {
 
 	IDictionary getDictionary();
 
+	void load(InputStream is) throws IOException;
+
+	void load(File file) throws IOException;
+
+	void save(OutputStream os) throws IOException;
+
+	void save(File file) throws IOException;
+
 	public static class Factory {
-
 		public static IProject newProject() {
-			return new MyImpl();
-		}
-
-		private static class MyImpl implements IProject {
-
-			private String mOriginalText;
-			private final IEventDispatcher mOriginalTextEventDisp;
-			private IDictionary mDictionary;
-
-			public MyImpl() {
-				this.mOriginalTextEventDisp = new DefaultEventDispatcher();
-			}
-
-			@Override
-			public String getOriginalText() {
-				return this.mOriginalText;
-			}
-
-			@Override
-			public void setOriginalText(String text) {
-				this.mOriginalText = text;
-				this.mOriginalTextEventDisp.dispacheEvent(new DefaultEvent());
-			}
-
-			@Override
-			public void addOriginalTextListener(IEventListener listener) {
-				this.mOriginalTextEventDisp.addListener(listener);
-			}
-
-			@Override
-			public void removeOriginalTextListener(IEventListener listener) {
-				this.mOriginalTextEventDisp.removeListener(listener);
-			}
-
-			@Override
-			public IDictionary getDictionary() {
-				return this.mDictionary;
-			}
+			return new ImplProject();
 		}
 	}
 
