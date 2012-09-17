@@ -9,15 +9,19 @@ import ananas.app.rfc_tw.event.IEventListener;
 
 public interface IProject {
 
-	String getOriginalText();
+	public static class Factory {
+		public static IProject newProject() {
+			return new ImplProject();
+		}
+	}
+
+	IDoc getDocument();
 
 	void setOriginalText(String text);
 
 	void addOriginalTextListener(IEventListener listener);
 
 	void removeOriginalTextListener(IEventListener listener);
-
-	IDictionary getDictionary();
 
 	void load(InputStream is) throws IOException;
 
@@ -27,10 +31,8 @@ public interface IProject {
 
 	void save(File file) throws IOException;
 
-	public static class Factory {
-		public static IProject newProject() {
-			return new ImplProject();
-		}
-	}
+	void scanWords();
+
+	void scanSentences();
 
 }

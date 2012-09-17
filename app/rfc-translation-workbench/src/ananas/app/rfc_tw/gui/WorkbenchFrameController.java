@@ -62,7 +62,7 @@ public class WorkbenchFrameController implements IWorkbenchFrameController {
 		JDialog jdlg = dlg.getJDialog();
 		jdlg.setModal(true);
 		jdlg.setVisible(true);
-		if (project.getOriginalText() == null) {
+		if (project.getDocument().getOriginal().getText() == null) {
 			return;
 		}
 

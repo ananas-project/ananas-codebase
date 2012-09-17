@@ -11,6 +11,7 @@ public class BprHashableString extends BprObjectBase {
 	private String mSHA1;
 	private final List<BprBytes> mBytes;
 	private String mText;
+	private String mValueCache;
 
 	public BprHashableString() {
 		this.mBytes = new ArrayList<BprBytes>();
@@ -20,8 +21,8 @@ public class BprHashableString extends BprObjectBase {
 	public boolean bind(Object child) {
 		if (child == null) {
 			return false;
-		} else  if ( child instanceof String  ) {
-			this.mText =(String) child;
+		} else if (child instanceof String) {
+			this.mText = (String) child;
 			return true;
 		} else {
 			return super.bind(child);
@@ -56,6 +57,14 @@ public class BprHashableString extends BprObjectBase {
 	public void onSaveEnd(OutputStreamWriter osw) throws IOException {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String getValue() {
+		return this.mValueCache;
+	}
+
+	public void setValue(String value) {
+		this.mValueCache = value;
 	}
 
 }

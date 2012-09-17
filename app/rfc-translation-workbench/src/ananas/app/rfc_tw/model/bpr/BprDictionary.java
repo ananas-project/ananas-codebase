@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
-public class BprDictionary extends BprObjectBase {
+import ananas.app.rfc_tw.model.IDictionary;
+
+public class BprDictionary extends BprObjectBase implements IDictionary {
 
 	private final HashMap<String, BprDictItem> mMap;
 
@@ -33,5 +35,17 @@ public class BprDictionary extends BprObjectBase {
 	public void setBprDictItem(BprDictItem item) {
 		String key = item.getKey();
 		this.mMap.put(key, item);
+	}
+
+	@Override
+	public void put(String key, String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String get(String key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

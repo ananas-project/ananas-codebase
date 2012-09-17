@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import ananas.app.rfc_tw.model.IDictionary;
+import ananas.app.rfc_tw.model.IDoc;
+import ananas.app.rfc_tw.model.IOriginal;
+import ananas.app.rfc_tw.model.ISentenceSet;
+import ananas.app.rfc_tw.model.IWordSet;
 
-public class BprRFCTW extends BprObjectBase {
+public class BprRFCTW extends BprObjectBase implements IDoc {
 
 	private BprOriginal mOriginal;
 	private BprSentences mSentences;
@@ -18,13 +22,16 @@ public class BprRFCTW extends BprObjectBase {
 	}
 
 	public void setOriginalText(String text) {
-		// TODO Auto-generated method stub
-
+		BprOriginal original = new BprOriginal();
+		original.setText(text);
+		this.mOriginal = original;
 	}
 
-	public String getOriginalText() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getOriginalText(boolean withoutPageInfo) {
+		BprOriginal original = this.mOriginal;
+		if (original == null)
+			return null;
+		return original.getText(withoutPageInfo);
 	}
 
 	@Override
@@ -57,6 +64,34 @@ public class BprRFCTW extends BprObjectBase {
 
 	public void setBprSentences(BprSentences sentences) {
 		this.mSentences = sentences;
+	}
+
+	@Override
+	public IDictionary getDictionary() {
+		if (this.mDictionary == null)
+			this.mDictionary = new BprDictionary();
+		return this.mDictionary;
+	}
+
+	@Override
+	public ISentenceSet getSentenceSet() {
+		if (this.mSentences == null)
+			this.mSentences = new BprSentences();
+		return this.mSentences;
+	}
+
+	@Override
+	public IWordSet getWordSet() {
+		if (this.mWords == null)
+			this.mWords = new BprWords();
+		return this.mWords;
+	}
+
+	@Override
+	public IOriginal getOriginal() {
+		if (this.mOriginal == null)
+			this.mOriginal = new BprOriginal();
+		return this.mOriginal;
 	}
 
 }

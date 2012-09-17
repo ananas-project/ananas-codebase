@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
-public class BprSentences extends BprObjectBase {
+import ananas.app.rfc_tw.model.ISentence;
+import ananas.app.rfc_tw.model.ISentenceSet;
+
+public class BprSentences extends BprObjectBase implements ISentenceSet {
 
 	private final HashMap<String, BprDictItem> mMap;
 
@@ -31,6 +34,12 @@ public class BprSentences extends BprObjectBase {
 	}
 
 	public void setBprSentence(BprSentence sentence) {
+	}
+
+	@Override
+	public ISentence getById(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

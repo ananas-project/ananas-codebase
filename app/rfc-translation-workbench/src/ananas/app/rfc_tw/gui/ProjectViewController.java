@@ -36,7 +36,8 @@ public class ProjectViewController extends AbstractViewController {
 
 		this._setupEventHandlers();
 
-		this.mOriginalTextView.setText(project.getOriginalText());
+		this.mOriginalTextView.setText(project.getDocument().getOriginal()
+				.getText());
 
 	}
 
@@ -47,7 +48,8 @@ public class ProjectViewController extends AbstractViewController {
 			@Override
 			public void onEvent(Event event) {
 				ProjectViewController pthis = ProjectViewController.this;
-				String text = pthis.mProject.getOriginalText();
+				String text = pthis.mProject.getDocument().getOriginal()
+						.getText();
 				pthis.mOriginalTextView.setText(text);
 			}
 		});
