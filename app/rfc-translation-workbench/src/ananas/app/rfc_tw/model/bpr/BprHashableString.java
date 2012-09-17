@@ -10,9 +10,22 @@ public class BprHashableString extends BprObjectBase {
 	private String mEncoding;
 	private String mSHA1;
 	private final List<BprBytes> mBytes;
+	private String mText;
 
 	public BprHashableString() {
 		this.mBytes = new ArrayList<BprBytes>();
+	}
+
+	@Override
+	public boolean bind(Object child) {
+		if (child == null) {
+			return false;
+		} else  if ( child instanceof String  ) {
+			this.mText =(String) child;
+			return true;
+		} else {
+			return super.bind(child);
+		}
 	}
 
 	public void setBprBytes(BprBytes bytes) {
