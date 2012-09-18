@@ -11,20 +11,17 @@ public class BprWord extends BprObjectBase implements IWord {
 
 	@Override
 	public void onSaveBegin(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("<word>");
 	}
 
 	@Override
 	public void onSaveContent(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		this._getString().save(osw);
 	}
 
 	@Override
 	public void onSaveEnd(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("</word>");
 	}
 
 	public void setBprHashableString(BprHashableString str) {

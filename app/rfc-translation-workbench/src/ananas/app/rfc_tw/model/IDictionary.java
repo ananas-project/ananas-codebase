@@ -6,4 +6,6 @@ public interface IDictionary {
 
 	String get(String key);
 
+	IDictionaryItem[] allItems();
+
 }

@@ -16,11 +16,6 @@ public class BprRFCTW extends BprObjectBase implements IDoc {
 	private BprWords mWords;
 	private BprDictionary mDictionary;
 
-	public IDictionary getDict() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public void setOriginalText(String text) {
 		BprOriginal original = new BprOriginal();
 		original.setText(text);
@@ -41,8 +36,18 @@ public class BprRFCTW extends BprObjectBase implements IDoc {
 
 	@Override
 	public void onSaveContent(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
 
+		BprOriginal original = (BprOriginal) this.getOriginal();
+		original.save(osw);
+
+		BprDictionary dict = (BprDictionary) this.getDictionary();
+		dict.save(osw);
+
+		BprWords words = (BprWords) this.getWordSet();
+		words.save(osw);
+
+		BprSentences sents = (BprSentences) this.getSentenceSet();
+		sents.save(osw);
 	}
 
 	@Override

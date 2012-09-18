@@ -2,8 +2,12 @@ package ananas.app.rfc_tw.model.bpr;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 import ananas.app.rfc_tw.model.IWord;
 import ananas.app.rfc_tw.model.IWordSet;
@@ -18,20 +22,30 @@ public class BprWords extends BprObjectBase implements IWordSet {
 
 	@Override
 	public void onSaveBegin(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("<words>");
 	}
 
 	@Override
 	public void onSaveContent(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		List<BprWord> list = new ArrayList<BprWord>();
+		list.addAll(this.mMap.values());
+		Comparator<? super BprWord> comp = new Comparator<BprWord>() {
+			@Override
+			public int compare(BprWord arg0, BprWord arg1) {
+				String t0 = arg0.getText();
+				String t1 = arg1.getText();
+				return t0.compareTo(t1);
+			}
+		};
+		Collections.<BprWord> sort(list, comp);
+		for (BprWord word : list) {
+			word.save(osw);
+		}
 	}
 
 	@Override
 	public void onSaveEnd(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("</words>");
 	}
 
 	public void setBprWord(BprWord word) {

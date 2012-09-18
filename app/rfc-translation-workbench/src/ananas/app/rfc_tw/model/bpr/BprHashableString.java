@@ -10,7 +10,7 @@ public class BprHashableString extends BprObjectBase {
 	private String mEncoding;
 	private String mSHA1;
 	private final List<BprBytes> mBytes;
-	private String mText;
+	// private String mText;
 	private String mValueCache;
 
 	public BprHashableString() {
@@ -22,7 +22,7 @@ public class BprHashableString extends BprObjectBase {
 		if (child == null) {
 			return false;
 		} else if (child instanceof String) {
-			this.mText = (String) child;
+			this.mValueCache = (String) child;
 			return true;
 		} else {
 			return super.bind(child);
@@ -43,20 +43,17 @@ public class BprHashableString extends BprObjectBase {
 
 	@Override
 	public void onSaveBegin(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("<string>");
 	}
 
 	@Override
 	public void onSaveContent(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write(this.mValueCache);
 	}
 
 	@Override
 	public void onSaveEnd(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("</string>");
 	}
 
 	public String getValue() {

@@ -16,20 +16,28 @@ public class BprOriginal extends BprObjectBase implements IOriginal {
 
 	@Override
 	public void onSaveBegin(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("<original>");
 	}
 
 	@Override
 	public void onSaveContent(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
+		String text = this.mTextCache;
+		if (text == null)
+			text = "";
+		BprHashableString str = this._getString();
+		str.setValue(text);
+		str.save(osw);
+	}
 
+	private BprHashableString _getString() {
+		if (this.mString == null)
+			this.mString = new BprHashableString();
+		return this.mString;
 	}
 
 	@Override
 	public void onSaveEnd(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("</original>");
 	}
 
 	public void setBprHashableString(BprHashableString str) {

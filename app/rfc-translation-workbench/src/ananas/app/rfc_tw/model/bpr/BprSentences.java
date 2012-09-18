@@ -17,8 +17,7 @@ public class BprSentences extends BprObjectBase implements ISentenceSet {
 
 	@Override
 	public void onSaveBegin(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("<sentences>");
 	}
 
 	@Override
@@ -29,8 +28,7 @@ public class BprSentences extends BprObjectBase implements ISentenceSet {
 
 	@Override
 	public void onSaveEnd(OutputStreamWriter osw) throws IOException {
-		// TODO Auto-generated method stub
-
+		osw.write("</sentences>");
 	}
 
 	public void setBprSentence(BprSentence sentence) {

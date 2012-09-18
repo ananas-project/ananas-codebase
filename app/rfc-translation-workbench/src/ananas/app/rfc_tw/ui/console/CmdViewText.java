@@ -3,6 +3,8 @@ package ananas.app.rfc_tw.ui.console;
 import java.util.HashMap;
 import java.util.Map;
 
+import ananas.app.rfc_tw.model.IDictionary;
+import ananas.app.rfc_tw.model.IDictionaryItem;
 import ananas.app.rfc_tw.model.IProject;
 import ananas.app.rfc_tw.model.IWord;
 import ananas.app.rfc_tw.model.IWordSet;
@@ -44,6 +46,23 @@ public class CmdViewText implements CLKCommand {
 				System.out.println("total: " + all.length + " words");
 			}
 		});
+
+		this.mSubCmd.put("dict", new Runnable() {
+
+			@Override
+			public void run() {
+				IProject prj = ConsoleCore.Agent.getCore().getProject();
+				IDictionary dict = prj.getDocument().getDictionary();
+				IDictionaryItem[] items = dict.allItems();
+				for (IDictionaryItem item : items) {
+					String key = item.key();
+					String value = item.value();
+					System.out.println(key + ":" + value + ";");
+				}
+				System.out.println("total: " + items.length + " items");
+			}
+		});
+
 	}
 
 	@Override
