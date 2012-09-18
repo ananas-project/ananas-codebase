@@ -2,10 +2,14 @@ package ananas.lib.blueprint.elements.reflect;
 
 public class BprString extends BprBaseType {
 
+	private String mValue;
+
 	@Override
 	protected void parseString(String s) {
-		// TODO Auto-generated method stub
-		
+		this.mValue = s;
 	}
 
+	public String stringValue() {
+		return this.mValue;
+	}
 }
