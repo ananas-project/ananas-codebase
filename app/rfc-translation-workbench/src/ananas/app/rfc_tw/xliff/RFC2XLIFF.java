@@ -147,8 +147,44 @@ public class RFC2XLIFF implements Convertor {
 		private void onPage(String strHead, String strBody, String strFoot) {
 			String id = "";
 			this.addUnit(id, strHead, true);
-			this.addUnit(id, strBody, false);
+			// this.addUnit(id, strBody, false);
+			this.parsePageBody(strBody);
 			this.addUnit(id, strFoot, true);
+		}
+
+		private void parsePageBody(String text) {
+			boolean isPrevWords = false;
+			char[] chs = text.toCharArray();
+			StringBuilder buf = new StringBuilder(128);
+			for (char ch : chs) {
+				final boolean isWords;
+				switch (ch) {
+				case '.':
+				case '!':
+				case '?':
+					isWords = false;
+					break;
+				default:
+					isWords = true;
+				}
+				if (isWords != isPrevWords) {
+					if (isPrevWords) {
+						buf.append(ch);
+						String str = buf.toString();
+						buf.setLength(0);
+						this.addUnit(null, str, true);
+					} else {
+						String str = buf.toString();
+						buf.setLength(0);
+						buf.append(ch);
+						this.addUnit(null, str, false);
+					}
+				} else {
+					buf.append(ch);
+				}
+				isPrevWords = isWords;
+			}
+
 		}
 
 		private void addUnit(String id, String text, boolean needTrans) {
