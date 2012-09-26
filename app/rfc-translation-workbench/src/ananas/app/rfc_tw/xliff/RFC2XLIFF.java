@@ -153,38 +153,40 @@ public class RFC2XLIFF implements Convertor {
 		}
 
 		private void parsePageBody(String text) {
-			boolean isPrevWords = false;
+			char prevChType = 0;
 			char[] chs = text.toCharArray();
 			StringBuilder buf = new StringBuilder(128);
+
+			final char ch_end = '.';
+			final char ch_space = 0x0d;
+
 			for (char ch : chs) {
-				final boolean isWords;
+				final char chType;
 				switch (ch) {
 				case '.':
 				case '!':
 				case '?':
-					isWords = false;
+					chType = ch_end;
+					break;
+				case ' ':
+				case 0x0a:
+				case 0x0d:
+				case 0x09:
+					chType = ch_space;
 					break;
 				default:
-					isWords = true;
+					chType = 0;
 				}
-				if (isWords != isPrevWords) {
-					if (isPrevWords) {
-						buf.append(ch);
-						String str = buf.toString();
-						buf.setLength(0);
-						this.addUnit(null, str, true);
-					} else {
-						String str = buf.toString();
-						buf.setLength(0);
-						buf.append(ch);
-						this.addUnit(null, str, false);
-					}
+				if (prevChType == ch_end && chType == ch_space) {
+					buf.append(ch);
+					String str = buf.toString();
+					buf.setLength(0);
+					this.addUnit(null, str, true);
 				} else {
 					buf.append(ch);
 				}
-				isPrevWords = isWords;
+				prevChType = chType;
 			}
-
 		}
 
 		private void addUnit(String id, String text, boolean needTrans) {
