@@ -23,7 +23,7 @@ import ananas.lib.blueprint.IDocumentBuilder;
 import ananas.lib.blueprint.IElement;
 import ananas.lib.blueprint.INamespace;
 import ananas.lib.blueprint.INamespaceRegistrar;
-import ananas.lib.blueprint.io.IInputConnection;
+import ananas.lib.io.IInputConnection;
 
 final class ImplDocumentBuilder implements IDocumentBuilder {
 

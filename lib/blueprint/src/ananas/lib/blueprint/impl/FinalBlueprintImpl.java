@@ -7,8 +7,8 @@ import ananas.lib.blueprint.IDocument;
 import ananas.lib.blueprint.IDocumentBuilder;
 import ananas.lib.blueprint.IDocumentBuilderFactory;
 import ananas.lib.blueprint.IImplementation;
-import ananas.lib.blueprint.io.DefaultConnector;
-import ananas.lib.blueprint.io.IConnector;
+import ananas.lib.io.DefaultConnector;
+import ananas.lib.io.IConnector;
 
 public final class FinalBlueprintImpl extends Blueprint {
 

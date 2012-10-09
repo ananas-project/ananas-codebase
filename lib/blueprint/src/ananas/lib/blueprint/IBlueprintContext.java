@@ -1,6 +1,6 @@
 package ananas.lib.blueprint;
 
-import ananas.lib.blueprint.io.IConnector;
+import ananas.lib.io.IConnector;
 
 public interface IBlueprintContext {
 
