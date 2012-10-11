@@ -2,7 +2,10 @@ package ananas.lib.io;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 class DefaultConnectorImpl implements IConnector {
 
@@ -36,24 +39,52 @@ class DefaultConnectorImpl implements IConnector {
 		return this.mReg;
 	}
 
+	static class FactoryTableItem {
+
+		private final IConnectionFactory mFactory;
+		private final URI mURI;
+
+		public FactoryTableItem(URI uri, IConnectionFactory factory) {
+			this.mURI = uri;
+			this.mFactory = factory;
+		}
+
+		public IConnectionFactory getFactory() {
+			return this.mFactory;
+		}
+
+		public URI getURI() {
+			return this.mURI;
+		}
+	}
+
 	private class MyConnFactoryRegistrar implements IConnectionFactoryRegistrar {
 
-		private final HashMap<String, IConnectionFactory> mFactoryTable;
+		private final HashMap<String, FactoryTableItem> mFactoryTable;
 
 		public MyConnFactoryRegistrar() {
-			this.mFactoryTable = new HashMap<String, IConnectionFactory>();
+			this.mFactoryTable = new HashMap<String, FactoryTableItem>();
 		}
 
 		@Override
 		public void registerFactory(URI uri, IConnectionFactory factory) {
 			String key = this._calcKeyString(uri, SCHEME | HOST | PORT | PATH);
-			this.mFactoryTable.put(key, factory);
+			FactoryTableItem item = new FactoryTableItem(uri, factory);
+			this.mFactoryTable.put(key, item);
 		}
 
 		@Override
 		public IConnectionFactory getFactory(URI uri) {
+			FactoryTableItem item = this._getItem(uri);
+			if (item == null) {
+				return null;
+			}
+			return item.getFactory();
+		}
+
+		private FactoryTableItem _getItem(URI uri) {
 			String key;
-			IConnectionFactory factory;
+			FactoryTableItem factory;
 			// mode-4
 			key = this._calcKeyString(uri, SCHEME | HOST | PORT | PATH);
 			factory = this.mFactoryTable.get(key);
@@ -114,6 +145,25 @@ class DefaultConnectorImpl implements IConnector {
 			if ((mode & PATH) == 0)
 				path = null;
 			return ("[" + scheme + host + port + path + "]");
+		}
+
+		@Override
+		public void printItems() {
+			System.out.println(this + ".items:");
+			List<URI> items = this.listItems();
+			for (URI item : items) {
+				System.out.println("    " + item);
+			}
+		}
+
+		@Override
+		public List<URI> listItems() {
+			List<URI> list = new ArrayList<URI>();
+			Collection<FactoryTableItem> items = this.mFactoryTable.values();
+			for (FactoryTableItem item : items) {
+				list.add(item.getURI());
+			}
+			return list;
 		}
 	};
 

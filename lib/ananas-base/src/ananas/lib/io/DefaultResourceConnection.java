@@ -18,7 +18,12 @@ public class DefaultResourceConnection implements IContentConnection {
 		@Override
 		public IConnection openConnection(URI uri) throws IOException {
 			String path = uri.getPath();
-			return new DefaultResourceConnection(path);
+			DefaultResourceConnection conn = new DefaultResourceConnection(path);
+			InputStream is = conn.getInputStream();
+			if (is == null) {
+				System.err.println("cannot find resource by uri : " + uri);
+			}
+			return conn;
 		}
 	}
 
