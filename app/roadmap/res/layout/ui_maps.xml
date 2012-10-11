@@ -43,15 +43,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="@string/hello" />
-
         </LinearLayout>
     </LinearLayout>
 
-    <com.google.android.maps.MapView
-        android:id="@+id/mapview"
+    <Button
+        android:id="@+id/button1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="0QJmUXTYkGket44-I4XLnXdG3lBcXxp3a7rlTuA"
-        android:clickable="true" />
+        android:text="@string/hello" />
 
 </LinearLayout>

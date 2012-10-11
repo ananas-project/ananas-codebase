@@ -1,16 +1,13 @@
 package ananas.app.roadmap;
 
 import ananas.app.roadmap.RoadmapService.IRoadmapService2Binder;
-import ananas.app.roadmap.util.ArmScaleOverlay;
 import ananas.app.roadmap.util.StatusClient;
-import ananas.app.roadmap.util.TaskRunner;
-import ananas.app.roadmap.util.kml.ArmKmlOverlay;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Menu;
@@ -19,51 +16,20 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
+public class RoadmapActivity extends Activity {
 
-public class RoadmapActivity extends MapActivity {
-
-	private MapView mMapView;
-	private MyLocationOverlay mMyLocOver;
 	private TextView mStatusView;
-	private TaskRunner mTaskRunner;
-	private ArmKmlOverlay mKmlOverlay;
-
-	@Override
-	protected boolean isRouteDisplayed() {
-		return false;
-	}
 
 	@Override
 	protected void onCreate(Bundle icicle) {
+
 		super.onCreate(icicle);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.ui_maps);
 
 		//
-		this.mMapView = (MapView) this.findViewById(R.id.mapview);
+
 		this.mStatusView = (TextView) this.findViewById(R.id.textViewStatus);
-
-		this._initMapView();
-	}
-
-	private void _initMapView() {
-
-		this.mMapView = (MapView) findViewById(R.id.mapview);
-		this.mMapView.setBuiltInZoomControls(true);
-		MyLocationOverlay myloc = new MyLocationOverlay(this, this.mMapView);
-		Drawable icon = this.getResources().getDrawable(
-				R.drawable.default_point);
-		ArmKmlOverlay kmlOverlay = new ArmKmlOverlay(this, this.mMapView, icon);
-		this.mKmlOverlay = kmlOverlay;
-		// myloc.enableMyLocation();
-		this.mMapView.getOverlays().add(kmlOverlay);
-		this.mMapView.getOverlays().add(myloc);
-		this.mMapView.getOverlays().add(new ArmScaleOverlay());
-		this.mMyLocOver = myloc;
 
 	}
 
@@ -78,8 +44,7 @@ public class RoadmapActivity extends MapActivity {
 	@Override
 	protected void onStop() {
 		System.out.println(this + ".onStop()");
-		this.mMyLocOver.disableCompass();
-		this.mMyLocOver.disableMyLocation();
+
 		this._unbindService();
 		super.onStop();
 	}
@@ -98,11 +63,11 @@ public class RoadmapActivity extends MapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_jump_to_mypos: {
-			RoadmapActivity.this._gotoMyPos();
+
 			break;
 		}
 		case R.id.menu_item_show_mypos_onoff: {
-			RoadmapActivity.this._showMyPos();
+
 			break;
 		}
 		case R.id.menu_item_record_mypos_onoff: {
@@ -110,13 +75,11 @@ public class RoadmapActivity extends MapActivity {
 			break;
 		}
 		case R.id.menu_item_select_maptype_plain: {
-			RoadmapActivity.this.mMapView.setSatellite(false);
+
 			break;
 		}
 		case R.id.menu_item_select_maptype_sat: {
-			RoadmapActivity.this.mMapView.setSatellite(true);
-			RoadmapActivity.this.mMapView.setStreetView(false);
-			RoadmapActivity.this.mMapView.setTraffic(false);
+
 			break;
 		}
 		case R.id.menu_item_select_kml: {
@@ -145,15 +108,6 @@ public class RoadmapActivity extends MapActivity {
 		 * TaskLoadKML(); runner.addTask(task);
 		 */
 
-		this.mKmlOverlay.startLoad();
-	}
-
-	public TaskRunner getTaskRunner() {
-		TaskRunner runner = this.mTaskRunner;
-		if (runner == null) {
-			this.mTaskRunner = runner = TaskRunner.Factory.newInstance();
-		}
-		return runner;
 	}
 
 	private void _showExitAppDialog() {
@@ -180,9 +134,6 @@ public class RoadmapActivity extends MapActivity {
 
 	private void _exitApp() {
 
-		this.mMyLocOver.disableMyLocation();
-		this.mMyLocOver.disableCompass();
-
 		this.mBinder.exit();
 		this._stopService();
 
@@ -201,40 +152,6 @@ public class RoadmapActivity extends MapActivity {
 			this.mBinder.startRecording();
 		} else {
 			this.mBinder.stopRecording();
-		}
-	}
-
-	private void _gotoMyPos() {
-		GeoPoint point = this.mMyLocOver.getMyLocation();
-		if (point == null)
-			return;
-		this.mMapView.getController().animateTo(point);
-	}
-
-	private void _initShowMyPos() {
-		StatusClient sc = new StatusClient(this.mBinder);
-		sc.update();
-		if (sc.isMyPosVisible) {
-			this.mMyLocOver.enableMyLocation();
-			this.mMyLocOver.enableCompass();
-		} else {
-			this.mMyLocOver.disableCompass();
-			this.mMyLocOver.disableMyLocation();
-		}
-	}
-
-	private void _showMyPos() {
-		StatusClient sc = new StatusClient(this.mBinder);
-		sc.update();
-		final boolean newVal = !sc.isMyPosVisible;
-		sc.isMyPosVisible = newVal;
-		sc.commit();
-		if (newVal) {
-			this.mMyLocOver.enableMyLocation();
-			this.mMyLocOver.enableCompass();
-		} else {
-			this.mMyLocOver.disableCompass();
-			this.mMyLocOver.disableMyLocation();
 		}
 	}
 
@@ -267,7 +184,7 @@ public class RoadmapActivity extends MapActivity {
 			RoadmapActivity.this.mBinder = binder;
 
 			RoadmapActivity.this._updateStatus();
-			RoadmapActivity.this._initShowMyPos();
+
 			// RoadmapActivity.this._loadKML();
 		}
 
