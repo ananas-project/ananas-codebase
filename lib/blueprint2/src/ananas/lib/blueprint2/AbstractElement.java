@@ -13,14 +13,14 @@ public class AbstractElement extends AbstractNode implements IElement {
 	private IDocument mOwnerDoc;
 	private IElement mParent;
 	private Object mTarget;
+	private String mId;
 
 	protected AbstractElement() {
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.mId;
 	}
 
 	@Override
@@ -55,21 +55,30 @@ public class AbstractElement extends AbstractNode implements IElement {
 	}
 
 	@Override
-	public boolean bindOwnerDocument(IDocument ownerDoc) {
-		// TODO Auto-generated method stub
-		return false;
+	public final boolean bindOwnerDocument(IDocument ownerDoc) {
+		if (this.mOwnerDoc == null && ownerDoc != null) {
+			this.mOwnerDoc = ownerDoc;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean setAttribute(IAttr attr) {
-		// TODO Auto-generated method stub
+		String lname = attr.getBlueprintClass().getLocalName();
+		if ("id".equalsIgnoreCase(lname)) {
+			this.mId = attr.getValue();
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public void tagBegin() {
-		// TODO Auto-generated method stub
-
+		if (this.mId != null) {
+			this.mOwnerDoc.registerElement(this);
+		}
 	}
 
 	@Override

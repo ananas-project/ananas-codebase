@@ -4,4 +4,6 @@ public interface IAttr extends INode {
 
 	String getValue();
 
+	void setValue(String value);
+
 }

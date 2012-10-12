@@ -1,4 +1,4 @@
-package ananas.lib.blueprint2.element.base;
+package ananas.lib.blueprint2.kml.wrapper;
 
 import ananas.lib.blueprint2.dom.helper.IImplementation;
 import ananas.lib.blueprint2.dom.helper.INamespace;
@@ -32,20 +32,11 @@ public class NamespaceLoader implements INamespaceLoader {
 		MyHelper h = new MyHelper(ns);
 		{
 			// attribute
-			// h.reg("xmlns", BaseAttr.class, URI.class);
-
-			h.reg("id", BaseAttr.class, String.class);
-			h.reg("type", BaseAttr.class, String.class);
-			h.reg("value", BaseAttr.class, String.class);
-
+			// h.reg("id", AwtBaseAttr.class, String.class);
 		}
 		{
 			// element
-			h.reg("Blueprint", BpBlueprintElement.class, BpBlueprint.class);
-			h.reg("Import", BpImportElement.class, BpImport.class);
-			h.reg("Link", BpLinkElement.class, BpLink.class);
-			h.reg("Head", BpHeadElement.class, BpHead.class);
-			h.reg("Body", BpBodyElement.class, BpBody.class);
+			// h.reg("blueprint", CBlueprintElement.class, CBlueprint.class);
 		}
 		return ns;
 	}

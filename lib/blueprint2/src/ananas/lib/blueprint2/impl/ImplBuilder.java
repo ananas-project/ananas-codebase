@@ -22,7 +22,6 @@ import ananas.lib.blueprint2.dom.IElement;
 import ananas.lib.blueprint2.dom.IText;
 import ananas.lib.blueprint2.dom.helper.IBlueprintContext;
 import ananas.lib.blueprint2.dom.helper.IDocumentBuilder;
-import ananas.lib.blueprint2.dom.helper.INamespace;
 import ananas.lib.io.IInputConnection;
 
 final class ImplBuilder implements IDocumentBuilder {
@@ -257,9 +256,19 @@ final class ImplBuilder implements IDocumentBuilder {
 				if (attrURI == null) {
 					attrURI = element.getBlueprintClass().getNamespaceURI();
 				}
-				IAttr attr = this.mDoc.createAttribute(attrURI, attrLName,
-						attrValue);
-				element.setAttribute(attr);
+				IAttr attr = this.mDoc.createAttribute(attrURI, attrLName);
+				attr.setValue(attrValue);
+				boolean rlt = element.setAttribute(attr);
+				if (!rlt) {
+					String msg = "the element do not accept the attr";
+					System.err.println(msg);
+					System.err.println("    " + "parent    = " + element);
+					System.err.println("    " + "attrURI   = " + attrURI);
+					System.err.println("    " + "attrLName = " + attrLName);
+					System.err.println("    " + "attrValue = " + attrValue);
+					System.err.println(msg);
+					throw new BlueprintException(msg);
+				}
 			}
 
 			// final

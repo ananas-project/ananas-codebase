@@ -1,8 +1,11 @@
-package ananas.lib.blueprint2.element.base;
+package ananas.lib.blueprint2.swing;
+
+import javax.swing.JFrame;
 
 import ananas.lib.blueprint2.dom.helper.IImplementation;
 import ananas.lib.blueprint2.dom.helper.INamespace;
 import ananas.lib.blueprint2.dom.helper.INamespaceLoader;
+import ananas.lib.blueprint2.element.base.BaseAttr;
 
 public class NamespaceLoader implements INamespaceLoader {
 
@@ -26,26 +29,24 @@ public class NamespaceLoader implements INamespaceLoader {
 
 	@Override
 	public INamespace load(IImplementation impl) {
-		String uri = "xmlns:ananas:blueprint:base";
-		String defaultPrefix = "bp";
+		String uri = "xmlns:ananas:blueprint:swing";
+		String defaultPrefix = "swing";
 		INamespace ns = impl.newNamespace(uri, defaultPrefix);
 		MyHelper h = new MyHelper(ns);
 		{
 			// attribute
-			// h.reg("xmlns", BaseAttr.class, URI.class);
 
 			h.reg("id", BaseAttr.class, String.class);
-			h.reg("type", BaseAttr.class, String.class);
-			h.reg("value", BaseAttr.class, String.class);
-
+			h.reg("title", BaseAttr.class, String.class);
+			h.reg("x", BaseAttr.class, Integer.class);
+			h.reg("y", BaseAttr.class, Integer.class);
+			h.reg("width", BaseAttr.class, Integer.class);
+			h.reg("height", BaseAttr.class, Integer.class);
 		}
 		{
 			// element
-			h.reg("Blueprint", BpBlueprintElement.class, BpBlueprint.class);
-			h.reg("Import", BpImportElement.class, BpImport.class);
-			h.reg("Link", BpLinkElement.class, BpLink.class);
-			h.reg("Head", BpHeadElement.class, BpHead.class);
-			h.reg("Body", BpBodyElement.class, BpBody.class);
+			// h.reg("blueprint", CBlueprintElement.class, CBlueprint.class);
+			h.reg("JFrame", JFrameWrapper.class, JFrame.class);
 		}
 		return ns;
 	}

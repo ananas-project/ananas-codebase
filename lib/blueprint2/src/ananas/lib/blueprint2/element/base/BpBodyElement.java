@@ -4,9 +4,9 @@ import ananas.lib.blueprint2.dom.IElement;
 import ananas.lib.blueprint2.dom.INode;
 import ananas.lib.blueprint2.dom.IText;
 
-public class CBodyElement extends BaseElement {
+public class BpBodyElement extends BaseElement {
 
-	public CBodyElement() {
+	public BpBodyElement() {
 	}
 
 	@Override
@@ -16,13 +16,13 @@ public class CBodyElement extends BaseElement {
 			return false;
 
 		} else if (child instanceof IText) {
-			CBody body = (CBody) this.getTarget(true);
+			BpBody body = (BpBody) this.getTarget(true);
 			IText ch = (IText) child;
 			body.add(ch.getData());
 			return true;
 
 		} else if (child instanceof IElement) {
-			CBody body = (CBody) this.getTarget(true);
+			BpBody body = (BpBody) this.getTarget(true);
 			Object ch = ((IElement) child).getTarget(true);
 			body.add(ch);
 			return true;

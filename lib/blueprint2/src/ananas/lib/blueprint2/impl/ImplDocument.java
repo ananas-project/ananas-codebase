@@ -78,7 +78,7 @@ final class ImplDocument implements IDocument {
 	}
 
 	@Override
-	public IAttr createAttribute(String uri, String localName, String value) {
+	public IAttr createAttribute(String uri, String localName) {
 		try {
 			INamespace ns = this.mImpl.getNamespaceRegistrar()
 					.getNamespace(uri);
@@ -90,7 +90,7 @@ final class ImplDocument implements IDocument {
 				throw new BlueprintException("no class");
 			IAttr attr = (IAttr) this._safe_newInstance(cls.getWrapperClass());
 			attr.bindBlueprintClass(cls);
-			return attr;
+					return attr;
 		} catch (Exception e) {
 			System.err.println("cannot create attribute:");
 			System.err.println("    " + "      uri = " + uri);

@@ -42,12 +42,6 @@ public class DefaultElement extends AbstractElement {
 	}
 
 	@Override
-	public boolean bindOwnerDocument(IDocument ownerDoc) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void tagBegin() {
 		// TODO Auto-generated method stub
 

@@ -4,13 +4,19 @@ import ananas.lib.blueprint2.dom.IAttr;
 
 public class AbstractAttribute extends AbstractNode implements IAttr {
 
-	public AbstractAttribute() {
+	private String mValue;
+
+	protected AbstractAttribute() {
 	}
 
 	@Override
 	public String getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.mValue;
+	}
+
+	@Override
+	public void setValue(String value) {
+		this.mValue = value;
 	}
 
 }

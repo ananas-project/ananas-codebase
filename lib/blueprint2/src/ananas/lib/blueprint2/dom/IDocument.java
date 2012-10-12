@@ -18,7 +18,7 @@ public interface IDocument extends INode {
 
 	String getDocumentURI();
 
-	IAttr createAttribute(String uri, String localName, String value);
+	IAttr createAttribute(String uri, String localName);
 
 	IElement createElement(String uri, String localName);
 
