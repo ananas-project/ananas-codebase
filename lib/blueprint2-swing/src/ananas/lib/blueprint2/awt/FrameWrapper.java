@@ -13,7 +13,9 @@ public class FrameWrapper extends WindowWrapper {
 	@Override
 	public boolean setAttribute(IAttr attr) {
 		String name = attr.getBlueprintClass().getLocalName();
-		if (name.equals("title")) {
+		if (name == null) {
+			return false;
+		} else if (name.equals("title")) {
 			this.title = attr;
 		} else {
 			return super.setAttribute(attr);
@@ -23,6 +25,7 @@ public class FrameWrapper extends WindowWrapper {
 
 	@Override
 	public void tagBegin() {
+		super.tagBegin();
 		Frame frame = (Frame) this.getTarget(true);
 		if (this.title != null) {
 			String str = this.getLocalString(this.title.getValue());

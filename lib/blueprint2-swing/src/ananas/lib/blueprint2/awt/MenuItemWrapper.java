@@ -25,6 +25,7 @@ public class MenuItemWrapper extends MenuComponentWrapper {
 
 	@Override
 	public void tagBegin() {
+		super.tagBegin();
 
 		final MenuItem item = (MenuItem) this.getTarget(true);
 

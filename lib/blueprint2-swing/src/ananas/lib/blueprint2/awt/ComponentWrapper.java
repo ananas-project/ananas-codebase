@@ -10,12 +10,20 @@ public class ComponentWrapper extends ObjectWrapper {
 	private IAttr mY;
 	private IAttr mWidth;
 	private IAttr mHeight;
+	private IAttr mName;
 
 	@Override
 	public boolean setAttribute(IAttr attr) {
 		String name = attr.getBlueprintClass().getLocalName();
 		if (name == null) {
 			return false;
+
+		} else if (name.equals("id")) {
+			this.mName = attr;
+			return super.setAttribute(attr);
+
+		} else if (name.equals("name")) {
+			this.mName = attr;
 
 		} else if (name.equals("x")) {
 			this.mX = attr;
@@ -34,6 +42,7 @@ public class ComponentWrapper extends ObjectWrapper {
 
 	@Override
 	public void tagBegin() {
+		super.tagBegin();
 
 		final Component comp = (Component) this.getTarget(true);
 
@@ -45,6 +54,14 @@ public class ComponentWrapper extends ObjectWrapper {
 			int h = this.intFromAttr(this.mHeight);
 			comp.setBounds(x, y, w, h);
 		}
+
+		if (this.mName != null) {
+			comp.setName(this.mName.getValue());
+		}
+	}
+
+	public Component getComponent(boolean create) {
+		return (Component) this.getTarget(create);
 	}
 
 }

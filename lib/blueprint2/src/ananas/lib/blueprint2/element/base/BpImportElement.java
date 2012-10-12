@@ -34,6 +34,7 @@ public class BpImportElement extends BaseElement {
 
 	@Override
 	public void tagEnd() {
+		super.tagEnd();
 		if (type_ns_loader.equals(type)) {
 			this._loadNsLoader(this.value);
 		}

@@ -76,6 +76,7 @@ public class AbstractElement extends AbstractNode implements IElement {
 
 	@Override
 	public void tagBegin() {
+		// super.tagBegin();
 		if (this.mId != null) {
 			this.mOwnerDoc.registerElement(this);
 		}
@@ -83,6 +84,7 @@ public class AbstractElement extends AbstractNode implements IElement {
 
 	@Override
 	public void tagEnd() {
+		// super.tagEnd() ;
 		// TODO Auto-generated method stub
 
 	}

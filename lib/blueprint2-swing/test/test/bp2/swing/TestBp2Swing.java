@@ -1,5 +1,7 @@
 package test.bp2.swing;
 
+import javax.swing.JFrame;
+
 import ananas.lib.blueprint2.Blueprint2;
 import ananas.lib.blueprint2.dom.IDocument;
 import ananas.lib.blueprint2.dom.helper.IBlueprint;
@@ -27,6 +29,8 @@ public class TestBp2Swing {
 		bp2.saveDocument(doc);
 		// doc = bp2.saveAsDocument("file:///", obj);
 
+		JFrame frame = (JFrame) doc.findTargetById("root");
+		frame.setVisible(true);
 	}
 
 }
