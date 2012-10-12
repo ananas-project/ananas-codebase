@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_item_show_mypos_onoff"
+        android:title="@string/menu_item_show_mypos">
+    </item>
+    <item android:id="@+id/menu_item_jump_to_mypos" android:title="@string/menu_item_goto_mypos">
+    </item>
+    <item android:id="@+id/menu_item_record_mypos_onoff" android:title="@string/menu_item_rec_mypos">
+    </item>
+    <item android:id="@+id/menu_item_select_maptype_plain" android:title="@string/menu_item_map_type_map">
+    </item>
+    <item android:id="@+id/menu_item_select_maptype_sat" android:title="@string/menu_item_map_type_sat">
+    </item>
+    <item android:id="@+id/menu_item_load_kml" android:title="@string/menu_item_load_kml">
+    </item>
+    <item android:id="@+id/menu_item_exit_app" android:title="@string/menu_item_exit">
+    </item>
+    <item android:id="@+id/menu_item_select_kml" android:title="@string/menu_item_select_kml"></item>
+
+</menu>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, RoadmapActivity!</string>
+    <string name="app_name">Roadmap</string>
+    <string name="app_service2_name">roadmap service 2</string>
+    
+</resources>
