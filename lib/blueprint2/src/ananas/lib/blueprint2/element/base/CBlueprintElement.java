@@ -3,7 +3,7 @@ package ananas.lib.blueprint2.element.base;
 import ananas.lib.blueprint2.dom.INode;
 import ananas.lib.blueprint2.dom.IText;
 
-public class CBlueprintElement extends ElementBase {
+public class CBlueprintElement extends BaseElement {
 
 	@Override
 	public boolean appendChild(INode child) {

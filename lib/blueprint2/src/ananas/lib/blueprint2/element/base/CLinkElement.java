@@ -1,5 +1,5 @@
 package ananas.lib.blueprint2.element.base;
 
-public class CLinkElement extends ElementBase {
+public class CLinkElement extends BaseElement {
 
 }

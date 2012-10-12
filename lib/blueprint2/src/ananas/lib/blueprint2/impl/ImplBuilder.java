@@ -16,11 +16,13 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import ananas.lib.blueprint2.BlueprintException;
+import ananas.lib.blueprint2.dom.IAttr;
 import ananas.lib.blueprint2.dom.IDocument;
 import ananas.lib.blueprint2.dom.IElement;
 import ananas.lib.blueprint2.dom.IText;
 import ananas.lib.blueprint2.dom.helper.IBlueprintContext;
 import ananas.lib.blueprint2.dom.helper.IDocumentBuilder;
+import ananas.lib.blueprint2.dom.helper.INamespace;
 import ananas.lib.io.IInputConnection;
 
 final class ImplBuilder implements IDocumentBuilder {
@@ -160,6 +162,7 @@ final class ImplBuilder implements IDocumentBuilder {
 
 		@Override
 		public void endDocument() throws SAXException {
+			this.mStack.clear();
 		}
 
 		@Override
@@ -167,6 +170,7 @@ final class ImplBuilder implements IDocumentBuilder {
 				throws SAXException {
 
 			final IElement child = this.mStack.pop();
+			child.tagEnd();
 			final IElement parent;
 			if (!this.mStack.isEmpty()) {
 				parent = this.mStack.peek();
@@ -222,7 +226,7 @@ final class ImplBuilder implements IDocumentBuilder {
 
 		@Override
 		public void startDocument() throws SAXException {
-
+			this.mStack.clear();
 		}
 
 		@Override
@@ -239,8 +243,28 @@ final class ImplBuilder implements IDocumentBuilder {
 				throw new BlueprintException(msg);
 			}
 
-			this.mStack.push(element);
+			// attr
+			int len = attributes.getLength();
+			for (int i = 0; i < len; i++) {
+				String attrURI = attributes.getURI(i);
+				String attrLName = attributes.getLocalName(i);
+				String attrValue = attributes.getValue(i);
+				if (attrURI != null) {
+					if (attrURI.isEmpty()) {
+						attrURI = null;
+					}
+				}
+				if (attrURI == null) {
+					attrURI = element.getBlueprintClass().getNamespaceURI();
+				}
+				IAttr attr = this.mDoc.createAttribute(attrURI, attrLName,
+						attrValue);
+				element.setAttribute(attr);
+			}
 
+			// final
+			this.mStack.push(element);
+			element.tagBegin();
 		}
 
 		@Override

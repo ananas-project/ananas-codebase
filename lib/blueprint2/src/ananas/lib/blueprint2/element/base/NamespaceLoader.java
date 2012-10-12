@@ -32,8 +32,8 @@ public class NamespaceLoader implements INamespaceLoader {
 		MyHelper h = new MyHelper(ns);
 		{
 			// attribute
-			h.reg("id", Object.class, Object.class);
-			h.reg("xmlns", Object.class, Object.class);
+			h.reg("id", BaseAttr.class, Object.class);
+			h.reg("xmlns", BaseAttr.class, Object.class);
 		}
 		{
 			// element

@@ -54,7 +54,14 @@ final class ImplImplementation implements IImplementation {
 
 	@Override
 	public void registerClass(IClass aClass) {
-		this.mClassReg.registerClass(aClass);
+		String uri = aClass.getNamespaceURI();
+		String localName = aClass.getLocalName();
+		IClass cls2 = this.mClassReg.findClass(uri, localName);
+		if (aClass.equals(cls2)) {
+			return;
+		} else {
+			this.mClassReg.registerClass(aClass);
+		}
 	}
 
 	@Override

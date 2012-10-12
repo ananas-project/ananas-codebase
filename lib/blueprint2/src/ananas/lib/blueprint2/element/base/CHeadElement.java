@@ -2,7 +2,7 @@ package ananas.lib.blueprint2.element.base;
 
 import ananas.lib.blueprint2.dom.INode;
 
-public class CHeadElement extends ElementBase {
+public class CHeadElement extends BaseElement {
 
 	@Override
 	public boolean appendChild(INode child) {
