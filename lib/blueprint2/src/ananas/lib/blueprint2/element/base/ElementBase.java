@@ -7,7 +7,7 @@ public class ElementBase extends AbstractElement {
 
 	@Override
 	public boolean appendChild(INode child) {
-		return true;
+		return super.appendChild(child);
 	}
 
 }

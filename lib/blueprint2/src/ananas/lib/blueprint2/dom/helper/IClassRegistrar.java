@@ -2,8 +2,6 @@ package ananas.lib.blueprint2.dom.helper;
 
 public interface IClassRegistrar {
 
-	IImplementation getImplementation();
-
 	/**
 	 * find
 	 * */
@@ -18,11 +16,7 @@ public interface IClassRegistrar {
 	 * register
 	 * */
 
-	IClass registerClass(String uri, String localName, Class<?> wrapperClass,
-			Class<?> targetClass);
-
-	IClass registerClass(String uri, String localName, String wrapperClass,
-			String targetClass);
+	void registerClass(IClass aClass);
 
 	/**
 	 * default

@@ -12,6 +12,8 @@ public interface IElement extends INode {
 
 	Object getTarget();
 
+	Object getTarget(boolean create);
+
 	Object createTarget();
 
 	IDocument getOwnerDocument();

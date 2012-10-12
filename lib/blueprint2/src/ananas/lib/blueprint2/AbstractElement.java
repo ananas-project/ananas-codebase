@@ -6,6 +6,7 @@ import ananas.lib.blueprint2.dom.IAttr;
 import ananas.lib.blueprint2.dom.IDocument;
 import ananas.lib.blueprint2.dom.IElement;
 import ananas.lib.blueprint2.dom.INode;
+import ananas.lib.blueprint2.dom.helper.IClass;
 
 public class AbstractElement extends AbstractNode implements IElement {
 
@@ -24,14 +25,18 @@ public class AbstractElement extends AbstractNode implements IElement {
 
 	@Override
 	public Object getTarget() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.mTarget;
 	}
 
 	@Override
 	public Object createTarget() {
-		// TODO Auto-generated method stub
-		return null;
+		IClass cls = this.getBlueprintClass();
+		Class<?> tc = cls.getTargetClass();
+		try {
+			return tc.newInstance();
+		} catch (Exception e) {
+			throw new BlueprintException(e);
+		}
 	}
 
 	@Override
@@ -101,6 +106,15 @@ public class AbstractElement extends AbstractNode implements IElement {
 	public List<INode> listChildren() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Object getTarget(boolean create) {
+		Object t = this.mTarget;
+		if (t == null && create) {
+			this.mTarget = t = this.createTarget();
+		}
+		return t;
 	}
 
 }

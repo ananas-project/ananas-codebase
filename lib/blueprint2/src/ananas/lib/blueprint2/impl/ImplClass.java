@@ -1,6 +1,7 @@
 package ananas.lib.blueprint2.impl;
 
 import ananas.lib.blueprint2.dom.helper.IClass;
+import ananas.lib.blueprint2.dom.helper.INamespace;
 
 final class ImplClass implements IClass {
 
@@ -8,14 +9,16 @@ final class ImplClass implements IClass {
 	private final String mLocalName;
 	private final Class<?> mWrapperClass;
 	private final Class<?> mTargetClass;
+	private final INamespace mNS;
 
 	public ImplClass(String uri, String localName, Class<?> wrapperClass,
-			Class<?> targetClass) {
+			Class<?> targetClass, INamespace ns) {
 
 		this.mNsURI = uri;
 		this.mLocalName = localName;
 		this.mWrapperClass = wrapperClass;
 		this.mTargetClass = targetClass;
+		this.mNS = ns;
 	}
 
 	@Override
@@ -36,6 +39,11 @@ final class ImplClass implements IClass {
 	@Override
 	public Class<?> getTargetClass() {
 		return this.mTargetClass;
+	}
+
+	@Override
+	public INamespace getNamespace() {
+		return this.mNS;
 	}
 
 }

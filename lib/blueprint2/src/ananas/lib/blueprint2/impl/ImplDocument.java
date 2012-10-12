@@ -79,12 +79,24 @@ final class ImplDocument implements IDocument {
 
 	@Override
 	public IAttr createAttribute(String uri, String localName, String value) {
-		INamespace ns = this.mImpl.getNamespaceRegistrar().getNamespace(uri);
-		IClassRegistrar ar = ns.getAttributeClassRegistrar();
-		IClass cls = ar.findClass(null, localName);
-		IAttr attr = (IAttr) this._safe_newInstance(cls.getWrapperClass());
-		attr.bindBlueprintClass(cls);
-		return attr;
+		try {
+			INamespace ns = this.mImpl.getNamespaceRegistrar()
+					.getNamespace(uri);
+			if (ns == null)
+				throw new BlueprintException("no namespace");
+			IClassRegistrar ar = ns;
+			IClass cls = ar.findClass(null, localName);
+			if (cls == null)
+				throw new BlueprintException("no class");
+			IAttr attr = (IAttr) this._safe_newInstance(cls.getWrapperClass());
+			attr.bindBlueprintClass(cls);
+			return attr;
+		} catch (Exception e) {
+			System.err.println("cannot create attribute:");
+			System.err.println("    " + "      uri = " + uri);
+			System.err.println("    " + "localName = " + localName);
+			throw new BlueprintException(e);
+		}
 	}
 
 	private Object _safe_newInstance(Class<?> aClass) {
@@ -97,25 +109,46 @@ final class ImplDocument implements IDocument {
 
 	@Override
 	public IElement createElement(String uri, String localName) {
-		INamespace ns = this.mImpl.getNamespaceRegistrar().getNamespace(uri);
-		IClassRegistrar er = ns.getElementClassRegistrar();
-		IClass cls = er.findClass(null, localName);
-		IElement element = (IElement) this._safe_newInstance(cls
-				.getWrapperClass());
-		element.bindOwnerDocument(this);
-		element.bindBlueprintClass(cls);
-		return element;
+		try {
+			INamespace ns = this.mImpl.getNamespaceRegistrar()
+					.getNamespace(uri);
+			IClassRegistrar er = ns;
+			if (ns == null)
+				throw new BlueprintException("no namespace");
+			IClass cls = er.findClass(null, localName);
+			if (cls == null)
+				throw new BlueprintException("no class");
+			IElement element = (IElement) this._safe_newInstance(cls
+					.getWrapperClass());
+			element.bindOwnerDocument(this);
+			element.bindBlueprintClass(cls);
+			return element;
+		} catch (Exception e) {
+			System.err.println("cannot create element:");
+			System.err.println("    " + "      uri = " + uri);
+			System.err.println("    " + "localName = " + localName);
+			throw new BlueprintException(e);
+		}
 	}
 
 	@Override
 	public IElement createElement(Object target) {
-		IClass cls = this.mImpl.getClassRegistrar().findClass(target);
-		IElement element = (IElement) this._safe_newInstance(cls
-				.getWrapperClass());
-		element.bindOwnerDocument(this);
-		element.bindBlueprintClass(cls);
-		element.bindTarget(target);
-		return element;
+		try {
+			IClass cls = this.mImpl.findClass(target);
+			if (cls == null)
+				throw new BlueprintException("no class");
+			IElement element = (IElement) this._safe_newInstance(cls
+					.getWrapperClass());
+			element.bindOwnerDocument(this);
+			element.bindBlueprintClass(cls);
+			element.bindTarget(target);
+			return element;
+		} catch (Exception e) {
+			System.err.println("cannot create element for target:");
+			System.err.println("    " + "target = "
+					+ target.getClass().getName());
+			throw new BlueprintException(e);
+		}
 	}
 
 	@Override

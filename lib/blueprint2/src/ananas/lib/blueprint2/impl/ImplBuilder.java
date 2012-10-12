@@ -85,6 +85,15 @@ final class ImplBuilder implements IDocumentBuilder {
 		@Override
 		public void characters(char[] ch, int start, int length)
 				throws SAXException {
+
+			int cc = this._trimHead(ch, start, length);
+			start += cc;
+			length -= cc;
+			cc = this._trimTail(ch, start, length);
+			length -= cc;
+			if (length < 1)
+				return;
+
 			String data = new String(ch, start, length);
 			IText text = this.mDoc.createText(data);
 			IElement element = this._curElement();
@@ -97,6 +106,52 @@ final class ImplBuilder implements IDocumentBuilder {
 				System.err.println(msg);
 				throw new BlueprintException(msg);
 			}
+		}
+
+		private int _trimTail(char[] ch, int start, int length) {
+			// return count char to trim
+			int cc = length;
+			for (; cc > 0; cc--) {
+				final char c = ch[start + cc - 1];
+				final boolean isSpace;
+				switch (c) {
+				case 0x09:
+				case 0x0a:
+				case 0x0d:
+				case ' ':
+					isSpace = true;
+					break;
+				default:
+					isSpace = false;
+					break;
+				}
+				if (!isSpace)
+					break;
+			}
+			return (length - cc);
+		}
+
+		private int _trimHead(char[] ch, int start, int length) {
+			// return count char to trim
+			int cc = 0;
+			for (; cc < length; cc++) {
+				final char c = ch[start + cc];
+				final boolean isSpace;
+				switch (c) {
+				case 0x09:
+				case 0x0a:
+				case 0x0d:
+				case ' ':
+					isSpace = true;
+					break;
+				default:
+					isSpace = false;
+					break;
+				}
+				if (!isSpace)
+					break;
+			}
+			return (cc);
 		}
 
 		private IElement _curElement() {

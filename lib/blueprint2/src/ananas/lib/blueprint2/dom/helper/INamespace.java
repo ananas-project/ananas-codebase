@@ -1,6 +1,6 @@
 package ananas.lib.blueprint2.dom.helper;
 
-public interface INamespace {
+public interface INamespace extends IClassRegistrar {
 
 	IImplementation getImplementation();
 
@@ -8,8 +8,10 @@ public interface INamespace {
 
 	String getDefaultPrefix();
 
-	IClassRegistrar getElementClassRegistrar();
+	IClass registerClass(String uri, String localName, Class<?> wrapperClass,
+			Class<?> targetClass);
 
-	IClassRegistrar getAttributeClassRegistrar();
+	IClass registerClass(String uri, String localName, String wrapperClass,
+			String targetClass);
 
 }
