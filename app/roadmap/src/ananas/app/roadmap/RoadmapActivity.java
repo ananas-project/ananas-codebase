@@ -1,7 +1,9 @@
 package ananas.app.roadmap;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import ananas.app.roadmap.RoadmapService.IRoadmapService2Binder;
-import ananas.app.roadmap.util.StatusClient;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -13,12 +15,17 @@ import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class RoadmapActivity extends Activity {
 
 	private TextView mStatusView;
+	private TextView mInfoView;
+	private final MyTimer mTimer = new MyTimer();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -30,6 +37,28 @@ public class RoadmapActivity extends Activity {
 		//
 
 		this.mStatusView = (TextView) this.findViewById(R.id.textViewStatus);
+		this.mStatusView.setText("");
+		this.mInfoView = (TextView) this.findViewById(R.id.textViewInfo);
+
+		Button btnRec = (Button) this.findViewById(R.id.button_record);
+		btnRec.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				RoadmapActivity.this.mBinder.record(null);
+				RoadmapActivity.this.onTimer();
+			}
+		});
+
+		Button btnStop = (Button) this.findViewById(R.id.button_stop);
+		btnStop.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				RoadmapActivity.this.mBinder.stop();
+				RoadmapActivity.this.onTimer();
+			}
+		});
 
 	}
 
@@ -39,14 +68,15 @@ public class RoadmapActivity extends Activity {
 		super.onStart();
 		this._startService();
 		this._bindService();
+		this.mTimer.start();
 	}
 
 	@Override
 	protected void onStop() {
 		System.out.println(this + ".onStop()");
-
 		this._unbindService();
 		super.onStop();
+		this.mTimer.stop();
 	}
 
 	@Override
@@ -110,6 +140,31 @@ public class RoadmapActivity extends Activity {
 
 	}
 
+	private class MyTimer extends TimerTask {
+
+		final Timer core = new Timer();
+		final Runnable runn = new Runnable() {
+
+			@Override
+			public void run() {
+				RoadmapActivity.this.onTimer();
+			}
+		};
+
+		public void stop() {
+			core.cancel();
+		}
+
+		public void start() {
+			core.schedule(this, 1000, 1000);
+		}
+
+		@Override
+		public void run() {
+			RoadmapActivity.this.runOnUiThread(this.runn);
+		}
+	}
+
 	private void _showExitAppDialog() {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -132,9 +187,31 @@ public class RoadmapActivity extends Activity {
 		alert.show();
 	}
 
+	protected void onTimer() {
+
+		final TextView iv = this.mInfoView;
+		final IRoadmapService2Binder binder = this.mBinder;
+		if (binder == null) {
+			iv.setText("no service");
+			return;
+		}
+		final StringBuilder sb = new StringBuilder();
+		final String path = binder.getCurrentRecording();
+		if (path == null) {
+			sb.append("\nStatus: stop");
+		} else {
+			final long sec = (System.currentTimeMillis() - binder
+					.getStartTime()) / 1000;
+			sb.append("\nStatus: recording");
+			sb.append("\nREC time:" + sec);
+			sb.append("\nREC Count:" + binder.getRecordingCount());
+			sb.append("\nREC File:" + path);
+		}
+		iv.setText(sb.toString());
+	}
+
 	private void _exitApp() {
 
-		this.mBinder.exit();
 		this._stopService();
 
 		Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -143,15 +220,12 @@ public class RoadmapActivity extends Activity {
 	}
 
 	private void _recMyPos() {
-		StatusClient sc = new StatusClient(this.mBinder);
-		sc.update();
-		final boolean newVal = !sc.isRecording;
-		sc.isRecording = newVal;
-		sc.commit();
+
+		boolean newVal = true;
 		if (newVal) {
-			this.mBinder.startRecording();
+			this.mBinder.record(null);
 		} else {
-			this.mBinder.stopRecording();
+			this.mBinder.stop();
 		}
 	}
 
@@ -161,8 +235,8 @@ public class RoadmapActivity extends Activity {
 	}
 
 	private void _stopService() {
-		Intent intent = new Intent(this, RoadmapService.class);
-		this.stopService(intent);
+		// Intent intent = new Intent(this, RoadmapService.class);
+		// this.stopService(intent);
 	}
 
 	private void _bindService() {
@@ -198,16 +272,7 @@ public class RoadmapActivity extends Activity {
 		IRoadmapService2Binder binder = this.mBinder;
 		if (binder == null)
 			return;
-		StatusClient sc = new StatusClient(binder);
-		sc.update();
-		String strStatus = "";
-		if (sc.isRecording) {
-			strStatus += "[Rec]";
-		}
-		if (sc.isMyPosVisible) {
-			strStatus += "[myPos]";
-		}
-		this.mStatusView.setText(strStatus);
+
 	}
 
 }

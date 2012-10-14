@@ -2,194 +2,204 @@ package ananas.app.roadmap.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.io.OutputStreamWriter;
+import java.util.List;
+import java.util.Vector;
 
-import android.content.Context;
+import ananas.app.roadmap.RoadmapService.IRoadmapService2Binder;
+import android.location.GpsStatus.NmeaListener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-public class RecordSession {
+public class RecordSession implements IRoadmapService2Binder, NmeaListener {
 
-	private static final int s_time_step = 1000;
-	private static final float s_distance_step = 5.0f;
-
-	private final Context mContext;
-
-	private final MyLocationListener mGpsListener = new MyLocationListener();
-	private final MyLocationListener mNetListener = new MyLocationListener();
+	private final LocationManager mLM;
 	private final File mFile;
-	private FileOutputStream mFOS;
-	private MyWriter mWriter;
+	private final long mStartTime;
+	private final List<String> mBuffer;
+	private final String mUserName;
 
-	public RecordSession(Context context) {
-		this.mContext = context;
+	private long mFlushTime;
+	private int mRecCount;
+	private boolean mIsOpen;
+	private boolean mIsClose;
+	private final LocationListener mLocationListener;
 
-		File basepath = this._genBasePath();
-		String filename = this._genFileName();
-		this.mFile = new File(basepath, filename);
+	public static RecordSession newInstance(LocationManager lm, File file,
+			String user, long startTime, int recCount) {
 
+		return new RecordSession(lm, file, user, startTime, recCount);
 	}
 
-	private String _genFileName() {
-		return ("rec_since_" + this._getCurrentTimeString() + ".txt");
-	}
-
-	private File _genBasePath() {
-		return RoadmapFileManager.Factory.getInstance().getRecordDirectory();
+	private RecordSession(LocationManager lm, File file, String user,
+			long startTime, int recCount) {
+		this.mRecCount = recCount;
+		this.mStartTime = startTime;
+		this.mLM = lm;
+		this.mFile = file;
+		this.mBuffer = new Vector<String>();
+		this.mUserName = user;
+		this.mLocationListener = new MyLocationAdapter((NmeaListener) this);
 	}
 
 	public void open() {
+		if (this.mIsOpen) {
+			return;
+		} else {
+			this.mIsOpen = true;
+		}
+		LocationManager lm = this.mLM;
+		// lm.addNmeaListener(this);
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5,
+				this.mLocationListener);
+		this._flush(System.currentTimeMillis());
+	}
 
-		// open file
-
+	private void _flush(long timestamp) {
 		try {
-			File file = this.mFile;
-			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+			// make header
+			if (!this.mFile.exists()) {
+				this.mFile.getParentFile().mkdirs();
+				this.mFile.createNewFile();
 			}
-			this.mFOS = new FileOutputStream(file);
-
-			this.mWriter = new MyWriter(this.mFOS);
-			this.mWriter.writeHeader();
-
+			boolean noHead = (this.mFile.length() == 0);
+			FileOutputStream os = new FileOutputStream(this.mFile, true);
+			OutputStreamWriter wtr = new OutputStreamWriter(os);
+			if (noHead) {
+				wtr.append("HTDF/1.0" + "\n");
+				wtr.append("Content-Type:" + "text/nmea" + "\n");
+				wtr.append("File-Name:" + this.mFile.getName() + "\n");
+				wtr.append("User-Name:" + this.mUserName + "\n");
+				wtr.append("Start-Time:" + this.mStartTime + "\n");
+				wtr.append("\n");
+			}
+			// append
+			List<String> buf = this.mBuffer;
+			for (String line : buf) {
+				wtr.append(line + '\n');
+			}
+			wtr.flush();
+			wtr.close();
+			os.flush();
+			os.close();
+			this.mFlushTime = timestamp;
+			this.mBuffer.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// listen
-
-		LocationManager lm = (LocationManager) this.mContext
-				.getSystemService(Context.LOCATION_SERVICE);
-
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				RecordSession.s_time_step, RecordSession.s_distance_step,
-				this.mGpsListener);
-
-		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-				RecordSession.s_time_step, RecordSession.s_distance_step,
-				this.mNetListener);
-
 	}
 
 	public void close() {
-
-		LocationManager lm = (LocationManager) this.mContext
-				.getSystemService(Context.LOCATION_SERVICE);
-
-		lm.removeUpdates(this.mNetListener);
-		lm.removeUpdates(this.mGpsListener);
-
-		this.mWriter.writeEnd();
-
-		try {
-			this.mFOS.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!this.mIsOpen) {
+			return;
 		}
+		if (this.mIsClose) {
+			return;
+		} else {
+			this.mIsClose = true;
+		}
+		LocationManager lm = this.mLM;
+		// lm.removeNmeaListener(this);
+		lm.removeUpdates(this.mLocationListener);
+		this._flush(System.currentTimeMillis());
 	}
 
-	public String getFullPath() {
-		File file = this.mFile;
-		if (file == null)
-			return null;
+	@Override
+	public String record(String path) {
 		return this.mFile.getAbsolutePath();
 	}
 
-	private String _getCurrentTimeString() {
-		final Calendar cale = Calendar.getInstance(TimeZone.getTimeZone(""));
-		cale.setTimeInMillis(System.currentTimeMillis());
-		final int yy, mm, dd, h, m, s;
-		dd = cale.get(Calendar.DAY_OF_MONTH);
-		mm = cale.get(Calendar.MONTH);
-		yy = cale.get(Calendar.YEAR);
-		h = cale.get(Calendar.HOUR_OF_DAY);
-		m = cale.get(Calendar.MINUTE);
-		s = cale.get(Calendar.SECOND);
-		return (yy + "" + _add02(mm + 1) + "" + _add02(dd) + "-" + _add02(h)
-				+ "" + _add02(m) + "" + _add02(s));
+	@Override
+	public String stop() {
+		return this.mFile.getAbsolutePath();
 	}
 
-	private String _add02(int n) {
-		String s = n + "";
-		if (s.length() == 1) {
-			s = '0' + s;
-		}
-		return s;
+	@Override
+	public String getCurrentRecording() {
+		return this.mFile.getAbsolutePath();
 	}
 
-	class MyWriter {
+	@Override
+	public void setBasePath(String basePath) {
+	}
 
-		private final PrintStream mps;
+	@Override
+	public String getBasePath() {
+		return this.mFile.getParentFile().getAbsolutePath();
+	}
 
-		public MyWriter(OutputStream os) {
-			this.mps = new PrintStream(os);
+	@Override
+	public void setActivityURI(String uri) {
+	}
+
+	@Override
+	public String getActivityURI() {
+		return null;
+	}
+
+	@Override
+	public long getStartTime() {
+		return this.mStartTime;
+	}
+
+	@Override
+	public int getRecordingCount() {
+		return this.mRecCount;
+	}
+
+	@Override
+	public void onNmeaReceived(long time, String line) {
+		this.mRecCount++;
+		this.mBuffer.add(line);
+		if ((this.mFlushTime + (1000 * 20)) < time) {
+			this._flush(time);
 		}
-
-		public void writeHeader() {
-			String str = "";
-
-			str += ("\"" + "timestamp" + "\"" + "\t");
-			str += ("\"" + "longitude" + "\"" + "\t");
-			str += ("\"" + "latitude" + "\"" + "\t");
-			str += ("\"" + "altitude" + "\"" + "\t");
-			str += ("\"" + "source" + "\"" + "\t");
-			str += ("\"" + "accuracy" + "\"" + "\t");
-
-			mps.println(str);
-		}
-
-		public void writeRec(Location location) {
-
-			String source = location.getProvider();
-			long time = location.getTime();
-			double lon = location.getLongitude();
-			double lat = location.getLatitude();
-			double alt = location.getAltitude();
-			float acc = location.getAccuracy();
-
-			String str = "";
-			String httime = HttpTimeStampConvertor.getInstance()
-					.millisecondToString(time);
-
-			str += ("\"" + httime + "\"" + "\t");
-			str += (lon + "\t");
-			str += (lat + "\t");
-			str += (alt + "\t");
-			str += ("\"" + source + "\"" + "\t");
-			str += (acc + "\t");
-
-			mps.println(str);
-		}
-
-		public void writeEnd() {
-			mps.println("[end]");
+		if (this.mBuffer.size() > 100) {
+			this._flush(time);
 		}
 	}
 
-	class MyLocationListener implements LocationListener {
+	static class MyLocationAdapter implements LocationListener {
 
-		@Override
-		public void onLocationChanged(Location location) {
-			RecordSession.this.mWriter.writeRec(location);
+		private final NmeaListener mNMEAListener;
+
+		public MyLocationAdapter(NmeaListener nmeaListener) {
+			this.mNMEAListener = nmeaListener;
 		}
 
 		@Override
-		public void onProviderDisabled(String provider) {
+		public void onLocationChanged(Location loc) {
+
+			StringBuilder sb = new StringBuilder(128);
+			sb.append(loc.getTime() + ",");
+			sb.append(loc.getLongitude() + ",");
+			sb.append(loc.getLatitude() + ",");
+			sb.append(loc.getAltitude() + ",");
+			sb.append(loc.getAccuracy() + ",");
+			sb.append(loc.getProvider() + ",");
+			sb.append(loc.getSpeed() + ",");
+
+			this.mNMEAListener.onNmeaReceived(loc.getTime(), sb.toString());
 		}
 
 		@Override
-		public void onProviderEnabled(String provider) {
+		public void onProviderDisabled(String arg0) {
+			// TODO Auto-generated method stub
+
 		}
 
 		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
+		public void onProviderEnabled(String arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+			// TODO Auto-generated method stub
+
 		}
 	}
 

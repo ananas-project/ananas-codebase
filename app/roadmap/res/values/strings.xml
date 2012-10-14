@@ -4,5 +4,8 @@
     <string name="hello">Hello World, RoadmapActivity!</string>
     <string name="app_name">Roadmap</string>
     <string name="app_service2_name">roadmap service 2</string>
+    <string name="btn_record">REC</string>
+    <string name="btn_stop">STOP</string>
+    <string name="info_xxx">asdfadasdfasdadfasdffa</string>
     
 </resources>

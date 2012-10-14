@@ -46,10 +46,30 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button1"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="64dp" >
+
+        <Button
+            android:id="@+id/button_record"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text="@string/btn_record" />
+
+        <Button
+            android:id="@+id/button_stop"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text="@string/btn_stop" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewInfo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:text="@string/hello" />
+        android:text="@string/info_xxx"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>
