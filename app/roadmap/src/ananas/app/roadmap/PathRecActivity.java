@@ -39,19 +39,20 @@ public class PathRecActivity extends Activity {
 	}
 
 	protected void _startRec() {
+		this._sendCommand("http://" + PathRecService.class.getName()
+				+ "/start?q=" + (this.mCount++));
+	}
 
+	private void _sendCommand(String uri) {
 		Intent intent = new Intent(this, PathRecService.class);
-		Uri data = Uri.parse("http://abc:123/abc?q=" + (this.mCount++));
+		Uri data = Uri.parse(uri);
 		String type = "text/nmea";
 		intent.setDataAndType(data, type);
 		this.startService(intent);
-
 	}
 
 	protected void _stopRec() {
-		Intent intent = new Intent(this, PathRecService.class);
-
-		this.stopService(intent);
-
+		this._sendCommand("http://" + PathRecService.class.getName()
+				+ "/stop?q=" + (this.mCount++));
 	}
 }
