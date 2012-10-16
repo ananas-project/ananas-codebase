@@ -25,8 +25,8 @@ public class JLabelWrapper extends JComponentWrapper {
 	}
 
 	@Override
-	public void tagBegin() {
-		super.tagBegin();
+	public void onTagBegin() {
+		super.onTagBegin();
 		JLabel label = this.getJLabel(true);
 		if (this.mText != null) {
 			String s = this.stringFromAttr(this.mText);
@@ -65,8 +65,8 @@ public class JLabelWrapper extends JComponentWrapper {
 		return sb;
 	}
 
-	public void tagEnd() {
-		super.tagEnd();
+	public void onTagEnd() {
+		super.onTagEnd();
 		JLabel label = this.getJLabel(true);
 		StringBuilder sb = this._getStringBuilder(false);
 		if (sb != null) {

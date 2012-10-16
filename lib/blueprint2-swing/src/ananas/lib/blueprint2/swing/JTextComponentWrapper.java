@@ -51,8 +51,8 @@ public class JTextComponentWrapper extends JComponentWrapper {
 		return sb;
 	}
 
-	public void tagEnd() {
-		super.tagEnd();
+	public void onTagEnd() {
+		super.onTagEnd();
 
 		JTextComponent jtc = this.getJTextComponent(true);
 
@@ -64,8 +64,8 @@ public class JTextComponentWrapper extends JComponentWrapper {
 	}
 
 	@Override
-	public void tagBegin() {
-		super.tagBegin();
+	public void onTagBegin() {
+		super.onTagBegin();
 		JTextComponent jtc = this.getJTextComponent(true);
 		if (this.mText != null) {
 			String s = this.stringFromAttr(this.mText);

@@ -13,6 +13,8 @@ public class AbstractButtonWrapper extends JComponentWrapper {
 		String lname = attr.getBlueprintClass().getLocalName();
 		if (lname == null) {
 			return false;
+		} else if (lname.equals("label")) {
+			this.mText = attr;
 		} else if (lname.equals("text")) {
 			this.mText = attr;
 		} else {
@@ -22,8 +24,8 @@ public class AbstractButtonWrapper extends JComponentWrapper {
 	}
 
 	@Override
-	public void tagBegin() {
-		super.tagBegin();
+	public void onTagBegin() {
+		super.onTagBegin();
 		AbstractButton btn = (AbstractButton) this.getTarget(true);
 		if (this.mText != null) {
 			String s = this.stringFromAttr(this.mText);

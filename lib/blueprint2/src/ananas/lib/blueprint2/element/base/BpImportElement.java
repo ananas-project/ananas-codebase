@@ -33,8 +33,8 @@ public class BpImportElement extends BaseElement {
 	public static final String type_class_loader = "class:*";
 
 	@Override
-	public void tagEnd() {
-		super.tagEnd();
+	public void onTagEnd() {
+		super.onTagEnd();
 		if (type_ns_loader.equals(type)) {
 			this._loadNsLoader(this.value);
 		}

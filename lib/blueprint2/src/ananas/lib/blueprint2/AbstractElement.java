@@ -14,6 +14,8 @@ public class AbstractElement extends AbstractNode implements IElement {
 	private IElement mParent;
 	private Object mTarget;
 	private String mId;
+	private boolean mIsTagBegin;
+	private boolean mIsTagEnd;
 
 	protected AbstractElement() {
 	}
@@ -75,18 +77,33 @@ public class AbstractElement extends AbstractNode implements IElement {
 	}
 
 	@Override
-	public void tagBegin() {
-		// super.tagBegin();
+	public final void tagBegin() {
+		this.onTagBegin();
+		if (!this.mIsTagBegin) {
+			System.err
+					.println("warning: the onTagBegin() has not been called : "
+							+ this);
+		}
+	}
+
+	@Override
+	public final void tagEnd() {
+		this.onTagEnd();
+		if (!this.mIsTagEnd) {
+			System.err.println("warning: the onTagEnd() has not been called : "
+					+ this);
+		}
+	}
+
+	protected void onTagBegin() {
+		this.mIsTagBegin = true;
 		if (this.mId != null) {
 			this.mOwnerDoc.registerElement(this);
 		}
 	}
 
-	@Override
-	public void tagEnd() {
-		// super.tagEnd() ;
-		// TODO Auto-generated method stub
-
+	protected void onTagEnd() {
+		this.mIsTagEnd = true;
 	}
 
 	@Override

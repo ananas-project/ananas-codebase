@@ -41,8 +41,8 @@ public class ComponentWrapper extends ObjectWrapper {
 	}
 
 	@Override
-	public void tagBegin() {
-		super.tagBegin();
+	public void onTagBegin() {
+		super.onTagBegin();
 
 		final Component comp = (Component) this.getTarget(true);
 

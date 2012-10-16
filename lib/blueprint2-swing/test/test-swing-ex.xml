@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Blueprint xmlns:bp="xmlns:ananas:blueprint:base" xmlns:awt="xmlns:ananas:blueprint:awt"
+	xmlns:swing="xmlns:ananas:blueprint:swing" xmlns="xmlns:ananas:blueprint:base"
+	xmlns:swingex="xmlns:ananas:blueprint:swing_ex">
+
+	<Head>
+		<Import type="class:NamespaceLoader" value="ananas.lib.blueprint2.swing_ex.NamespaceLoader" />
+		<Import type="class:NamespaceLoader" value="ananas.lib.blueprint2.swing.NamespaceLoader" />
+		<Import type="class:NamespaceLoader" value="ananas.lib.blueprint2.awt.NamespaceLoader" />
+
+		<!-- test import class loader -->
+		<Import type="class:*" id="class_demo"
+			value="ananas.lib.blueprint.elements.awt.NamespaceLoader" />
+		<Import type="class:*" id="class_demo[hide]" value="test.blueprint.Demo" />
+		<Import type="class:*" id="class_demo[hide]" value="test.blueprint.Demo.err" />
+	</Head>
+
+	<Body>
+		<JFrame xmlns="xmlns:ananas:blueprint:swing" id="root"
+			title="Blueprint DEMO" x="320" y="240" width="640" height="480">
+			<JMenuBar>
+				<JMenu label="File">
+					<JMenuItem label="New"></JMenuItem>
+					<JMenuItem id="id_menu_exit" label="Exit">
+					</JMenuItem>
+				</JMenu>
+				<JMenu label="Edit">
+					<JMenuItem label="Cut">
+					</JMenuItem>
+					<JMenuItem label="Copy">
+					</JMenuItem>
+					<JMenuItem label="Paste">
+					</JMenuItem>
+					<JMenu label="Find">
+						<JMenuItem label="Find in Document">
+						</JMenuItem>
+						<JMenuItem label="Find in Directory">
+						</JMenuItem>
+					</JMenu>
+				</JMenu>
+				<JMenu label="Help">
+					<JMenuItem label="Help Content">
+					</JMenuItem>
+					<JSeparator />
+					<JMenuItem label="About">
+					</JMenuItem>
+				</JMenu>
+			</JMenuBar>
+
+			<awt:GridLayout rows="1" columns="2" />
+
+
+			<JSplitPane>
+
+				<position value="left" />
+				<JScrollPane>
+					<JTree></JTree>
+				</JScrollPane>
+
+				<position value="right" />
+				<JSplitPane orientation="VERTICAL_SPLIT">
+
+					<position value="top" />
+					<JScrollPane>
+						<swingex:JDirectoryTree basepath="/media/" />
+					</JScrollPane>
+
+					<position value="bottom" />
+					<JScrollPane>
+						<JTree></JTree>
+					</JScrollPane>
+
+				</JSplitPane>
+
+
+			</JSplitPane>
+
+
+		</JFrame>
+
+	</Body>
+</Blueprint>

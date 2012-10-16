@@ -24,8 +24,8 @@ public class FrameWrapper extends WindowWrapper {
 	}
 
 	@Override
-	public void tagBegin() {
-		super.tagBegin();
+	public void onTagBegin() {
+		super.onTagBegin();
 		Frame frame = (Frame) this.getTarget(true);
 		if (this.title != null) {
 			String str = this.getLocalString(this.title.getValue());

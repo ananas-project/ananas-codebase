@@ -42,15 +42,15 @@ public class DefaultElement extends AbstractElement {
 	}
 
 	@Override
-	public void tagBegin() {
-		super.tagBegin();
+	public void onTagBegin() {
+		super.onTagBegin();
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void tagEnd() {
-		super.tagEnd();
+	public void onTagEnd() {
+		super.onTagEnd();
 		// TODO Auto-generated method stub
 
 	}

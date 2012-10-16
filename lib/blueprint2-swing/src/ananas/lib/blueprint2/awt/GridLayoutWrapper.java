@@ -30,8 +30,8 @@ public class GridLayoutWrapper extends ObjectWrapper implements
 		return true;
 	}
 
-	public void tagBegin() {
-		super.tagBegin();
+	public void onTagBegin() {
+		super.onTagBegin();
 		GridLayout gl = (GridLayout) this.getTarget(true);
 		int rows = this.intFromAttr(this.mRows);
 		int cols = this.intFromAttr(this.mColumns);
