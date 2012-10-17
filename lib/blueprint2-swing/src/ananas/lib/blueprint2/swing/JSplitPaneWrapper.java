@@ -13,6 +13,9 @@ public class JSplitPaneWrapper extends JComponentWrapper {
 
 	private String mCurrentPosition;
 	private IAttr mOrientation;
+	private IAttr mResizeWeight;
+	private IAttr mDividerLocation;
+	private IAttr mDividerSize;
 
 	@Override
 	public boolean appendChild(INode child) {
@@ -44,8 +47,17 @@ public class JSplitPaneWrapper extends JComponentWrapper {
 		if (name == null) {
 			return false;
 
+		} else if (name.equals("dividerLocation")) {
+			this.mDividerLocation = attr;
+
+		} else if (name.equals("dividerSize")) {
+			this.mDividerSize = attr;
+
 		} else if (name.equals("orientation")) {
 			this.mOrientation = attr;
+
+		} else if (name.equals("resizeWeight")) {
+			this.mResizeWeight = attr;
 
 		} else {
 			return super.setAttribute(attr);
@@ -68,6 +80,26 @@ public class JSplitPaneWrapper extends JComponentWrapper {
 				my.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 			}
 		}
+
+		if (this.mResizeWeight != null) {
+			String s = this.mResizeWeight.getValue();
+			my.setResizeWeight(Double.parseDouble(s));
+		}
+
+		if (this.mDividerLocation != null) {
+			String s = this.mDividerLocation.getValue();
+			if (s.indexOf('.') < 0) {
+				my.setDividerLocation(Integer.parseInt(s));
+			} else {
+				my.setDividerLocation(Double.parseDouble(s));
+			}
+		}
+
+		if (this.mDividerSize != null) {
+			String s = this.mDividerSize.getValue();
+			my.setDividerSize(Integer.parseInt(s));
+		}
+
 	}
 
 	private void _addComp_2(ComponentWrapper compWrapper) {

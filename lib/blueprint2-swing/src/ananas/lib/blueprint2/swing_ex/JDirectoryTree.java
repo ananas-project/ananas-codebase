@@ -80,7 +80,7 @@ public class JDirectoryTree extends JTree {
 		}
 	};
 
-	private class MyTreeNode implements TreeNode {
+	private class MyTreeNode implements TreeNode, JDirectoryTreeNode {
 
 		private final File mFile;
 		private final MyTreeNode mParent;
@@ -177,6 +177,11 @@ public class JDirectoryTree extends JTree {
 
 		public String toString() {
 			return this.mFile.getName();
+		}
+
+		@Override
+		public File getFile() {
+			return this.mFile;
 		}
 
 	}

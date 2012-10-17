@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Blueprint xmlns:bp="xmlns:ananas:blueprint:base" xmlns:awt="xmlns:ananas:blueprint:awt"
+	xmlns:swing="xmlns:ananas:blueprint:swing" xmlns="xmlns:ananas:blueprint:base"
+	xmlns:swingex="xmlns:ananas:blueprint:swing_ex">
+
+	<Head>
+		<Import type="class:NamespaceLoader" value="ananas.lib.blueprint2.swing_ex.NamespaceLoader" />
+		<Import type="class:NamespaceLoader" value="ananas.lib.blueprint2.swing.NamespaceLoader" />
+		<Import type="class:NamespaceLoader" value="ananas.lib.blueprint2.awt.NamespaceLoader" />
+
+		<!-- test import class loader -->
+		<Import type="class:*" id="class_demo"
+			value="ananas.lib.blueprint.elements.awt.NamespaceLoader" />
+		<Import type="class:*" id="class_demo[hide]" value="test.blueprint.Demo" />
+		<Import type="class:*" id="class_demo[hide]" value="test.blueprint.Demo.err" />
+	</Head>
+
+	<Body>
+		<JFrame xmlns="xmlns:ananas:blueprint:swing" id="root"
+			title="Time &amp; Space Terminator" x="320" y="240" width="640"
+			height="480">
+			<JMenuBar>
+				<JMenu label="File">
+					<JMenuItem label="New"></JMenuItem>
+					<JMenuItem id="id_menu_exit" label="Exit">
+					</JMenuItem>
+				</JMenu>
+				<JMenu label="Edit">
+					<JMenuItem label="Cut">
+					</JMenuItem>
+					<JMenuItem label="Copy" command="cmd_copy">
+					</JMenuItem>
+					<JMenuItem label="Paste" actionCommand="cmd_paste">
+					</JMenuItem>
+					<JMenu label="Find">
+						<JMenuItem label="Find in Document">
+						</JMenuItem>
+						<JMenuItem label="Find in Directory">
+						</JMenuItem>
+					</JMenu>
+				</JMenu>
+				<JMenu label="Help">
+					<JMenuItem label="Help Content">
+					</JMenuItem>
+					<JSeparator />
+					<JMenuItem label="About">
+					</JMenuItem>
+				</JMenu>
+			</JMenuBar>
+
+			<JPanel>
+				<awt:BorderLayout />
+
+				<position value="north" />
+				<JTextField id="MyAddressBar" />
+
+
+				<position value="center" />
+				<JSplitPane orientation="HORZ" resizeWeight="0.0">
+
+					<position value="left" />
+					<JSplitPane orientation="VERT" resizeWeight="0.0"
+						dividerLocation="150" dividerSize="5">
+
+						<position value="top" />
+						<!-- view:tree -->
+						<JScrollPane>
+							<swingex:JDirectoryTree id="MyFileTreeView"
+								basepath="/media/Document/develop" />
+						</JScrollPane>
+
+						<position value="bottom" />
+						<!-- view:list files -->
+						<JScrollPane>
+							<JList id="MyFileListView" />
+						</JScrollPane>
+
+					</JSplitPane>
+
+					<position value="right" />
+					<JSplitPane orientation="VERT" resizeWeight="1.0"
+						dividerLocation="150">
+
+						<position value="top" />
+						<JSplitPane orientation="HORZ" resizeWeight="0.5">
+
+							<position value="left" />
+							<!-- view:map -->
+							<JScrollPane>
+								<JLabel text="map" />
+							</JScrollPane>
+
+							<position value="right" />
+							<!-- view:content -->
+							<JScrollPane>
+								<JLabel text="content" />
+							</JScrollPane>
+
+						</JSplitPane>
+
+						<position value="bottom" />
+						<!-- view:timeline -->
+						<JScrollPane>
+							<JLabel text="timeline" />
+						</JScrollPane>
+
+					</JSplitPane>
+
+
+				</JSplitPane>
+
+			</JPanel>
+
+		</JFrame>
+
+	</Body>
+</Blueprint>

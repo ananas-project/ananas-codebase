@@ -37,7 +37,7 @@ public class NamespaceLoader implements INamespaceLoader {
 			// attribute
 
 			h.reg("basepath", BaseAttr.class, String.class);
-			// h.reg("id", BaseAttr.class, String.class);
+			h.reg("id", BaseAttr.class, String.class);
 			// h.reg("label", BaseAttr.class, String.class);
 			// h.reg("title", BaseAttr.class, String.class);
 			// h.reg("text", BaseAttr.class, String.class);

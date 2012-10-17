@@ -3,6 +3,7 @@ package ananas.lib.blueprint2.swing;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -50,9 +51,14 @@ public class NamespaceLoader implements INamespaceLoader {
 		{
 			// attribute
 
+			h.reg("actionCommand", BaseAttr.class, String.class);
+			h.reg("command", BaseAttr.class, String.class);
+			h.reg("dividerLocation", BaseAttr.class, Double.class);
+			h.reg("dividerSize", BaseAttr.class, Integer.class);
 			h.reg("id", BaseAttr.class, String.class);
 			h.reg("label", BaseAttr.class, String.class);
 			h.reg("orientation", BaseAttr.class, String.class);
+			h.reg("resizeWeight", BaseAttr.class, Double.class);
 			h.reg("title", BaseAttr.class, String.class);
 			h.reg("text", BaseAttr.class, String.class);
 			h.reg("x", BaseAttr.class, Integer.class);
@@ -76,6 +82,7 @@ public class NamespaceLoader implements INamespaceLoader {
 			h.reg("JButton", JButtonWrapper.class, JButton.class);
 			h.reg("JFrame", JFrameWrapper.class, JFrame.class);
 			h.reg("JLabel", JLabelWrapper.class, JLabel.class);
+			h.reg("JList", JListWrapper.class, JList.class);
 			h.reg("JPanel", JPanelWrapper.class, JPanel.class);
 			h.reg("JPasswordField", JPasswordFieldWrapper.class,
 					JPasswordField.class);
