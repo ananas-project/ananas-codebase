@@ -1,5 +1,7 @@
 package ananas.lib.blueprint2.swing;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -52,9 +54,11 @@ public class NamespaceLoader implements INamespaceLoader {
 			// attribute
 
 			h.reg("actionCommand", BaseAttr.class, String.class);
+			h.reg("background", BaseAttr.class, Color.class);
 			h.reg("command", BaseAttr.class, String.class);
 			h.reg("dividerLocation", BaseAttr.class, Double.class);
 			h.reg("dividerSize", BaseAttr.class, Integer.class);
+			h.reg("editable", BaseAttr.class, Boolean.class);
 			h.reg("id", BaseAttr.class, String.class);
 			h.reg("label", BaseAttr.class, String.class);
 			h.reg("orientation", BaseAttr.class, String.class);

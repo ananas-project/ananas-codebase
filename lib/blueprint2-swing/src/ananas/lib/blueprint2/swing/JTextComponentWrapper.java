@@ -8,14 +8,17 @@ import ananas.lib.blueprint2.dom.IText;
 
 public class JTextComponentWrapper extends JComponentWrapper {
 
-	private IAttr mText;
 	private StringBuilder mStringBuilder;
+	private IAttr mText;
+	private IAttr mEditable;
 
 	@Override
 	public boolean setAttribute(IAttr attr) {
 		String name = attr.getBlueprintClass().getLocalName();
 		if (name == null) {
 			return false;
+		} else if (name.equals("editable")) {
+			this.mEditable = attr;
 		} else if (name.equals("text")) {
 			this.mText = attr;
 		} else {
@@ -71,6 +74,12 @@ public class JTextComponentWrapper extends JComponentWrapper {
 			String s = this.stringFromAttr(this.mText);
 			jtc.setText(s);
 		}
+
+		if (this.mEditable != null) {
+			boolean b = this.booleanFromAttr(this.mEditable);
+			jtc.setEditable(b);
+		}
+
 	}
 
 	public JTextComponent getJTextComponent(boolean create) {

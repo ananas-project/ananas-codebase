@@ -1,5 +1,8 @@
 package ananas.lib.blueprint2.awt;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import ananas.lib.blueprint2.AbstractElement;
 import ananas.lib.blueprint2.dom.IAttr;
 import ananas.lib.blueprint2.dom.INode;
@@ -52,6 +55,19 @@ public class AwtBaseElement extends AbstractElement {
 		if (s == null)
 			return 0;
 		return Double.parseDouble(s);
+	}
+
+	public Color colorFromAttr(IAttr attr) {
+		String s = attr.getValue();
+		if (s.startsWith("#")) {
+			// s = s.substring(1);
+		}
+		return Color.decode(s);
+	}
+
+	public Font fontFromAttr(IAttr attr) {
+		String s = attr.getValue();
+		return Font.decode(s);
 	}
 
 }
