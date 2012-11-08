@@ -1,23 +1,28 @@
 package test.ananas.xmpp;
 
-import java.io.IOException;
-
-import ananas.lib.io.DefaultConnector;
-import ananas.lib.io.IConnector;
 import ananas.lib.xmpp.AnanasXMPP;
-import ananas.lib.xmpp.IXmppConnection;
+import ananas.lib.xmpp.DefaultAXAccount;
+import ananas.lib.xmpp.DefaultAXAddress;
+import ananas.lib.xmpp.api.AXClient;
+import ananas.lib.xmpp.api.AXClientFactory;
+import ananas.lib.xmpp.api.command.AXCmdSetClient;
 
 public class TestMain {
 
 	public static void main(String[] args) {
 
 		try {
-			AnanasXMPP.init();
-			IConnector connector = DefaultConnector.getDefault();
-			IXmppConnection conn = (IXmppConnection) connector
-					.open("xmpp://talk.google.com:5552/a_res_name?ssl=false");
-			conn.connect("xukun@gmail.com", "12345678");
-		} catch (IOException e) {
+
+			AXClientFactory fact = AnanasXMPP.getDefaultFactory();
+			DefaultAXAccount account = new DefaultAXAccount();
+			account.server = "talk.google.com";
+			account.password = "12345678";
+			account.address = new DefaultAXAddress(
+					"xk.1985.02.17@gmail.com/a/b.c");
+			AXClient client = fact.createClient(account);
+			client.execute(new AXCmdSetClient(AXCmdSetClient.CTRL_CONNECT));
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

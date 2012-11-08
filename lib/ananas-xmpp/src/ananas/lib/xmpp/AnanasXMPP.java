@@ -1,11 +1,11 @@
 package ananas.lib.xmpp;
 
-import ananas.lib.xmpp.impl.AnanasXMPP_impl;
+import ananas.lib.xmpp.api.AXClientFactory;
 
 public class AnanasXMPP {
 
-	public static void init() {
-		AnanasXMPP_impl.init();
+	public static AXClientFactory getDefaultFactory() {
+		return DefaultAXClientFactoryLoader.load();
 	}
 
 }
