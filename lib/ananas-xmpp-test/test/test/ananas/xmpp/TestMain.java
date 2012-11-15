@@ -13,7 +13,7 @@ public class TestMain {
 
 		try {
 
-			AXClientFactory fact = AnanasXMPP.getDefaultFactory();
+			AXClientFactory fact = AnanasXMPP.getFactory(null);
 			DefaultAXAccount account = new DefaultAXAccount();
 			account.server = "talk.google.com";
 			account.password = "12345678";

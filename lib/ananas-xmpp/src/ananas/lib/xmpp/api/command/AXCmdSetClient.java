@@ -34,6 +34,9 @@ public class AXCmdSetClient extends AbstractAXCommand implements
 			case AXCmdSetClient.CTRL_DISCONNECT:
 				cc.disconnect();
 				break;
+			case AXCmdSetClient.CTRL_BIND_ACCOUNT:
+				cc.bindAccount(this.mAccount);
+				break;
 			default:
 			}
 		}
@@ -54,6 +57,12 @@ public class AXCmdSetClient extends AbstractAXCommand implements
 
 	public void close() {
 		this.mCtrl = AXCmdSetClient.CTRL_CLOSE;
+	}
+
+	@Override
+	public void bindAccount(AXAccount account) {
+		this.mCtrl = AXCmdSetClient.CTRL_BIND_ACCOUNT;
+		this.mAccount = account;
 	}
 
 }

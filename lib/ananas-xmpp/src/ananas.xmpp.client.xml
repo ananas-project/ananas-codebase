@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Blueprint xmlns:bp="xmlns:ananas:blueprint:base" xmlns:awt="xmlns:ananas:blueprint:awt"
+	xmlns:swing="xmlns:ananas:blueprint:swing" xmlns="xmlns:ananas:blueprint:base">
+	<Head>
+		<Import type="class:NamespaceLoader" value="ananas.lib.xmpp.client.component.NamespaceLoader" />
+	</Head>
+	<bp:Body xmlns="xmlns:ananas:xmpp:client:component"
+		xmlns:xmpp-com="xmlns:ananas:xmpp:client:component">
+
+		<xmpp-com:event-dispatcher>
+		</xmpp-com:event-dispatcher>
+
+	</bp:Body>
+</Blueprint>
