@@ -1,17 +1,18 @@
-package ananas.lib.xmpp.api.command;
+package ananas.lib.xmpp.command;
 
 import ananas.lib.xmpp.api.AXAccount;
 import ananas.lib.xmpp.api.AXClient;
 import ananas.lib.xmpp.api.AXClientControl;
+import ananas.lib.xmpp.api.AXClientPhase;
 
 public class AXCmdSetClient extends AbstractAXCommand implements
 		AXClientControl {
 
 	private AXAccount mAccount;
-	private int mCtrl;
-
-	public AXCmdSetClient() {
-	}
+	private final int mCtrl;
+	private Class<?> mInterfaceClass;
+	private Object mInterface;
+	private AXClientPhase mPhase;
 
 	public AXCmdSetClient(int ctrl) {
 		this.mCtrl = ctrl;
@@ -23,7 +24,9 @@ public class AXCmdSetClient extends AbstractAXCommand implements
 			AXClientControl cc = (AXClientControl) client;
 			switch (this.mCtrl) {
 			case AXCmdSetClient.CTRL_GET_ACCOUNT:
-				this.mAccount = cc.getAccount();
+				if (this.mAccount == null) {
+					this.mAccount = cc.getAccount();
+				}
 				break;
 			case AXCmdSetClient.CTRL_CLOSE:
 				cc.close();
@@ -37,32 +40,58 @@ public class AXCmdSetClient extends AbstractAXCommand implements
 			case AXCmdSetClient.CTRL_BIND_ACCOUNT:
 				cc.bindAccount(this.mAccount);
 				break;
+			case AXCmdSetClient.CTRL_GET_PHASE:
+				if (this.mPhase == null) {
+					this.mPhase = cc.getPhase();
+				}
+				break;
 			default:
 			}
 		}
+
+		if (this.mInterfaceClass != null) {
+			if (this.mInterface == null) {
+				if (this.mInterfaceClass.isInstance(client)) {
+					this.mInterface = client;
+				}
+			}
+		}
+
 	}
 
+	@Override
 	public AXAccount getAccount() {
-		this.mCtrl = AXCmdSetClient.CTRL_GET_ACCOUNT;
 		return this.mAccount;
 	}
 
+	@Override
 	public void connect() {
-		this.mCtrl = AXCmdSetClient.CTRL_CONNECT;
 	}
 
+	@Override
 	public void disconnect() {
-		this.mCtrl = AXCmdSetClient.CTRL_DISCONNECT;
 	}
 
+	@Override
 	public void close() {
-		this.mCtrl = AXCmdSetClient.CTRL_CLOSE;
 	}
 
 	@Override
 	public void bindAccount(AXAccount account) {
-		this.mCtrl = AXCmdSetClient.CTRL_BIND_ACCOUNT;
 		this.mAccount = account;
+	}
+
+	@Override
+	public Object getInterface(Class<?> aInterface) {
+		if (this.mInterfaceClass == null) {
+			this.mInterfaceClass = aInterface;
+		}
+		return this.mInterface;
+	}
+
+	@Override
+	public AXClientPhase getPhase() {
+		return this.mPhase;
 	}
 
 }

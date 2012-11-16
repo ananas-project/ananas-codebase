@@ -1,6 +1,6 @@
 package ananas.lib.xmpp.api;
 
-import ananas.lib.xmpp.api.command.AXCommand;
+import ananas.lib.xmpp.command.AXCommand;
 
 public interface AXClient {
 

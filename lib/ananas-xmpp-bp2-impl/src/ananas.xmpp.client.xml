@@ -7,8 +7,13 @@
 	<bp:Body xmlns="xmlns:ananas:xmpp:client:component"
 		xmlns:xmpp-com="xmlns:ananas:xmpp:client:component">
 
-		<xmpp-com:event-dispatcher>
-		</xmpp-com:event-dispatcher>
+		<root id="root">
+			<account-manager>
+				<codec>
+					<connection></connection>
+				</codec>
+			</account-manager>
+		</root>
 
 	</bp:Body>
 </Blueprint>

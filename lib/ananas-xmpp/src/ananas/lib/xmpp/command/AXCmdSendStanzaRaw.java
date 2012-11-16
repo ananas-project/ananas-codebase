@@ -1,4 +1,4 @@
-package ananas.lib.xmpp.api.command;
+package ananas.lib.xmpp.command;
 
 import ananas.lib.xmpp.api.AXClient;
 

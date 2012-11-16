@@ -1,4 +1,4 @@
-package ananas.lib.xmpp.api.event;
+package ananas.lib.xmpp.event;
 
 import ananas.lib.xmpp.api.AXClientListener;
 
