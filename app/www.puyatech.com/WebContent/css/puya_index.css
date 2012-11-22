@@ -1,0 +1,70 @@
+@charset "utf-8";
+/* CSS Document */
+.body {
+	background-color:#333;
+}
+.td img {
+	display:block
+}
+.char_title_text {
+	font-family:"微软雅黑";
+	font-size:45px;
+	color:#FFFFFF;
+	font-weight:bolder;
+}
+.char_foot_text {
+	font-family:"微软雅黑";
+	font-size:12px;
+	color:#CCC;
+}
+.back_div {
+	opacity: 0.6;
+}
+.char_company_title {
+	color:#FFFFFF;
+	font-family:"微软雅黑";
+	font-size:18px;
+}
+.content_div {
+	position:relative;
+	z-index:1;
+	width:600px;
+}
+.produce_div {
+	z-index:2;
+	position:absolute;
+	width:395px;
+	height:400px;
+	left: 165px;
+	top: 4px;
+}
+.download_icon_div {
+	z-index:2;
+	position:absolute;
+	width:182px;
+	height:116px;
+	left: 204px;
+	top: 276px;
+}
+.contact_us {
+	font-family:"微软雅黑";
+	font-size:12px;
+	color:#FFF;
+}
+.char_company_title_e {
+	color:#FFFFFF;
+	font-family:"微软雅黑";
+	font-size:10px;
+}
+.produces_01 {
+	background-image:url(../images/produces_table_r1_c2.png);
+}
+.produces_pic_01 {
+	background-image:url(../images/produces_table_r3_c1.png);
+}
+.produces_char_style {
+	color:#FFFFFF;
+	font-family:"微软雅黑";
+	font-size:19px;
+	font-weight:600;
+}
