@@ -1,0 +1,92 @@
+Available commands in this ejabberd node:
+  add_rosteritem localuser localserver user server nick group subs    （向用户的花名册中添加一项）Add an item to a user's roster 
+  backup file                                                         （把数据库存到备份文件中）Store the database to backup file 
+  ban_account user host reason                                        （封帐号：提掉会话，并设置随机密码）Ban an account: kick sessions and set random password 
+  change_password user host newpass                                   （修改密码）Change the password of an account 
+  check_account user host                                             （检查帐号是否存在）Check if an account exists or not 
+  check_password user host password                                   （检查密码是否正确）Check if a password is correct 
+  check_password_hash user host passwordhash hashmethod               （检查密码的hash是否正确）Check if the password hash is correct 
+  compile file                                                        （重新编译并加载Erlang源码）Recompile and reload Erlang source code file 
+  connected_users                                                     （列出所有已建立的会话）List all established sessions 
+  connected_users_info                                                （列出所有已建立的会话及其信息）List all established sessions and their information 
+  connected_users_number                                              （取已建立的会话的数量）Get the number of established sessions 
+  connected_users_vhost host                                          （取虚拟主机上已建立的会话的列表）Get the list of established sessions in a vhost 
+  delete_expired_messages                                             （从数据库中删除已过期的离线消息）Delete expired offline messages from database 
+  delete_old_messages days                                            （删除DAYS天前的离线消息）Delete offline messages older than DAYS 
+  delete_old_users days                                               （删除至少已经n天没登录的用户，或从未登录的用户）Delete users that didn't log in last days, or that never logged 
+  delete_old_users_vhost host days                                    （从虚拟主机里删除至少已经n天没登录的用户，或从未登录的用户）Delete users that didn't log in last days in vhost, or that never logged 
+  delete_rosteritem localuser localserver user server                 （从用户的花名册中删除一项）Delete an item from a user's roster 
+  dump file                                                           （把数据库转存到文本文件）Dump the database to text file 
+  dump_table file table                                               （把表转存到文本文件）Dump a table to text file 
+  export2odbc host path                                               （把Mnesia表导出到指定目录中的若干文件里）Export Mnesia tables to files in directory 
+  export_piefxis dir                                                  Export data of all users in the server to PIEFXIS files (XEP-0227) 
+  export_piefxis_host dir host                                        Export data of users in a host to PIEFXIS files (XEP-0227) 
+  get_cookie                                                          （取该节点的Erlang cookie）Get the Erlang cookie of this node 
+  get_loglevel                                                        （取当前的loglevel）Get the current loglevel 
+  get_roster user host                                                （取本地用户的花名册）Get roster of a local user 
+  get_vcard user host name                                            （取vCard一字段的内容）Get content from a vCard field 
+  get_vcard2 user host name subname                                   （取vCard一字段的内容）Get content from a vCard field 
+  get_vcard2_multi user host name subname                             （取vCard若干字段的内容）Get multiple contents from a vCard field (requires exmpp installed) 
+  help [--tags [tag] | com?*]                                         （显示帮助）Show help (try: ejabberdctl help help) 
+  import_dir file                                                     （从jabberd14 spool dir导入若干用户数据）Import users data from jabberd14 spool dir 
+  import_file file                                                    （从jabberd14 spool file导入某个用户数据）Import user data from jabberd14 spool file 
+  import_piefxis file                                                 （从PIEFXIS文件导入若干用户数据）Import users data from a PIEFXIS file (XEP-0227) 
+  incoming_s2s_number                                                 （节点的s2s链接数）Number of incoming s2s connections on the node 
+  install_fallback file                                               Install the database from a fallback file 
+  kick_session user host resource reason                              Kick a user session 
+  load file                                                           Restore the database from text file 
+  load_config file                                                    Load ejabberd configuration file 
+  mnesia [info]                                                       show information of Mnesia system 
+  mnesia_change_nodename oldnodename newnodename oldbackup newbackup  Change the erlang node name in a backup file 
+  num_active_users host days                                          Get number of users active in the last days 
+  num_resources user host                                             Get the number of resources of a user 
+  outgoing_s2s_number                                                 Number of outgoing s2s connections on the node 
+  privacy_set user host xmlquery                                      Send a IQ set privacy stanza for a local account 
+  private_get user host element ns                                    Get some information from a user private storage 
+  private_set user host element                                       Set to the user private storage 
+  process_rosteritems action subs asks users contacts                 List or delete rosteritems that match filtering options 
+  push_alltoall host group                                            Add all the users to all the users of Host in Group 
+  push_roster file user host                                          Push template roster from file to a user 
+  push_roster_all file                                                Push template roster from file to all those users 
+  register user host password                                         （注册一个用户）Register a user 
+  registered_users host                                               （列出指定主机上的所有用户）List all registered users in HOST 
+  remove_node node                                                    （从Mnesia集群配置中移除一个节点）Remove an ejabberd node from Mnesia clustering config 
+  rename_default_nodeplugin                                           （通过svn更新PubSub表）Update PubSub table from old ejabberd trunk SVN to 2.1.0 
+  reopen_log                                                          （重新打开log文件）Reopen the log files 
+  resource_num user host num                                          （会话number的资源字符串）Resource string of a session number 
+  restart                                                             （重启服务）Restart ejabberd 
+  restore file                                                        （从备份文件中恢复数据库）Restore the database from backup file 
+  send_message_chat from to body                                      Send a chat message to a local or remote bare of full JID 
+  send_message_headline from to subject body                          Send a headline message to a local or remote bare of full JID 
+  send_stanza_c2s user host resource stanza                           Send a stanza as if sent from a c2s session 
+  set_last user host timestamp status                                 Set last activity information 
+  set_master nodename                                                 Set master node of the clustered Mnesia tables 
+  set_nickname user host nickname                                     Set nickname in a user's vCard 
+  set_presence user host resource type show status priority           Set presence of a session 
+  set_vcard user host name content                                    Set content in a vCard field 
+  set_vcard2 user host name subname content                           Set content in a vCard subfield 
+  set_vcard2_multi user host name subname contents                    *Set multiple contents in a vCard subfield 
+  srg_create group host name description display                      Create a Shared Roster Group 
+  srg_delete group host                                               Delete a Shared Roster Group 
+  srg_get_info group host                                             Get info of a Shared Roster Group 
+  srg_get_members group host                                          Get members of a Shared Roster Group 
+  srg_list host                                                       List the Shared Roster Groups in Host 
+  srg_user_add user host group grouphost                              Add the JID user@host to the Shared Roster Group 
+  srg_user_del user host group grouphost                              Delete this JID user@host from the Shared Roster Group 
+  stats name                                                          Get statistical value: registeredusers onlineusers onlineusersnode uptimeseconds 
+  stats_host name host                                                Get statistical value for this host: registeredusers onlineusers 
+  status                                                              Get ejabberd status 
+  status_list status                                                  List of logged users with this status 
+  status_list_host host status                                        List of users logged in host with their statuses 
+  status_num status                                                   Number of logged users with this status 
+  status_num_host host status                                         Number of logged users with this status in host 
+  stop                                                                Stop ejabberd 
+  stop_kindly delay announcement                                      Inform users and rooms, wait, and stop the server 
+  unregister user host                                                Unregister a user 
+  update module                                                       Update the given module, or use the keyword: all 
+  update_list                                                         List modified modules that can be updated 
+  user_resources user host                                            List user's connected resources 
+  user_sessions_info user host                                        Get information about all sessions of a user 
+
+
+
