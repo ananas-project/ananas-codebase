@@ -1,0 +1,22 @@
+<?xml version='1.0' ?>
+<!-- this is a example for snowflake-repo (not bare) -->
+<template workspace="#works" xmlns="uri:xmlns:ananas:dtml">
+
+	<dir id="working_dir">
+
+		<dir name=".git">
+			<dir name="objects"></dir>
+			<dir name="branches"></dir>
+			<dir name="refs"></dir>
+			<file name="config" />
+		</dir>
+
+		<dir name=".snowflake" id="works">
+			<dir name="shadows"></dir>
+			<dir name="local"></dir>
+			<file name=".gitignore" />
+		</dir>
+
+	</dir>
+
+</template>

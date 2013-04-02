@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eom xmlns="xmlns:ananas:blueprint:loader:eom">
+
+	<namespace uri="::dtml" enableExport="true">
+
+		<property key="myCtrlPackage" value="ananas.lib.dtml.dom" />
+		<property key="myTargetPackage" value="ananas.lib.dtml.dom" />
+
+		<property key="namespace:uri" value="uri:xmlns:ananas:dtml" />
+		<property key="namespace:defaultPrefix" value="dtree" />
+		<property key="class:javaName" value="xxx" />
+
+		<property key="class:controllerClass" value="$(myCtrlPackage).C_$(class:javaName)" />
+		<property key="class:targetClass" value="$(myTargetPackage).T_$(class:javaName)" />
+
+		<!-- components -->
+
+		<class name="object" isElement="false">
+			<attribute name="id" />
+		</class>
+
+		<class name="node" isElement="false" extends="#object">
+			<attribute name="name" />
+			<attribute name="required" />
+			<attribute name="optional" />
+		</class>
+
+		<class name="template" isElement="true" extends="#object">
+			<attribute name="workspace" />
+			<element type="#node" />
+		</class>
+
+		<class name="dir" isElement="true" extends="#node">
+			<element type="#node" />
+		</class>
+
+		<class name="file" isElement="true" extends="#node">
+		</class>
+
+	</namespace>
+
+</eom>
