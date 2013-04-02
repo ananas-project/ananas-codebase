@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+
+<script type="text/javascript">
+	function getTime(out_id) {
+		var http = new XMLHttpRequest();
+		http.open("GET", "GetTime", true);
+		http.onreadystatechange = function(obj) {
+			var div = document.getElementById(out_id);
+			div.innerHTML = http.responseText;
+		};
+		http.send("");
+
+	}
+</script>
+
+</head>
+<body onload='getTime("output")'>
+
+	<div id="output"></div>
+
+</body>
+</html>
