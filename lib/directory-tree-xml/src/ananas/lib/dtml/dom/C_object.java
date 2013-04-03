@@ -10,7 +10,9 @@ public class C_object extends CObject {
 	}
 
 	public boolean set_attribute_id(BPAttribute attr) {
-		this.target_object().setId(attr.getValue());
+		String id = attr.getValue();
+		this.target_object().setId(id);
+		this.getOwnerDocument().getElementRegistrar().put(id, this);
 		return true;
 	}
 

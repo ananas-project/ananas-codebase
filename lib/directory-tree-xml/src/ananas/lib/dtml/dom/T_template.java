@@ -14,8 +14,13 @@ public class T_template implements DTWorkspaceFactory {
 
 	@Override
 	public DTWorkspace createWorkspace(VFile file) {
+		DTWorkspaceBuilder builder = new DTWorkspaceBuilder(this, file);
+		return builder.build();
+	}
+
+	public void setMain(T_node main) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }

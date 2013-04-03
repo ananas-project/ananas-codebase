@@ -4,7 +4,7 @@ import ananas.lib.blueprint3.core.dom.BPAttribute;
 
 public class C_template extends C_object {
 
-	private BPAttribute m_attr_workspace;
+	private BPAttribute m_attr_main;
 
 	public T_template target_template() {
 		return (T_template) this.getTarget(true);
@@ -15,9 +15,15 @@ public class C_template extends C_object {
 		return true;
 	}
 
-	public boolean set_attribute_workspace(BPAttribute attr) {
-		this.m_attr_workspace = attr;
+	public boolean set_attribute_main(BPAttribute attr) {
+		this.m_attr_main = attr;
 		return true;
 	}
 
+	public void onTagEnd() {
+		super.onTagEnd();
+		String uri = this.m_attr_main.getValue();
+		T_node main = (T_node) this.getOwnerDocument().findTargetByURI(uri);
+		this.target_template().setMain(main);
+	}
 }

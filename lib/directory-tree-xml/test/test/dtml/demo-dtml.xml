@@ -1,6 +1,6 @@
 <?xml version='1.0' ?>
 <!-- this is a example for snowflake-repo (not bare) -->
-<template workspace="#works" xmlns="uri:xmlns:ananas:dtml">
+<template main="#works" xmlns="uri:xmlns:ananas:dtml">
 
 	<dir id="working_dir">
 
