@@ -1,6 +1,6 @@
 package ananas.lib.dtml.dom;
 
-import ananas.lib.blueprint3.core.dom.BPAttribute;
+import ananas.lib.blueprint3.dom.BPAttribute;
 
 public class C_template extends C_object {
 

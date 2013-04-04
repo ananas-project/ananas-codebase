@@ -4,10 +4,10 @@ import java.io.File;
 import java.net.URL;
 import java.util.Properties;
 
-import ananas.lib.blueprint3.core.Blueprint;
-import ananas.lib.blueprint3.core.dom.BPDocument;
-import ananas.lib.blueprint3.core.lang.BPEnvironment;
-import ananas.lib.blueprint3.core.tools.R_file_generator;
+import ananas.lib.blueprint3.Blueprint;
+import ananas.lib.blueprint3.dom.BPDocument;
+import ananas.lib.blueprint3.lang.BPEnvironment;
+import ananas.lib.blueprint3.tools.R_file_generator;
 import ananas.lib.dtml.DTWorkspaceFactory;
 import ananas.lib.util.CommandLinePropertiesUtil;
 
@@ -57,13 +57,14 @@ public class DemoWorkspaceFactoryLoader {
 			String nslist[] = {
 					"ananas.lib.blueprint3.loader.eom.EomReflectInfo",
 					"ananas.lib.dtml.dom.DtmlNsInfo" };
-			BPEnvironment envi = Blueprint.getInstance().defaultEnvironment();
+			BPEnvironment envi = Blueprint.Util.getInstance()
+					.defaultEnvironment();
 			for (String ns : nslist) {
 				envi.loadNamespace(ns, true);
 			}
 
 			String url = R.file.demo_dtml_xml;
-			BPDocument doc = Blueprint.loadDocument(url);
+			BPDocument doc = Blueprint.Util.loadDocument(url);
 			DTWorkspaceFactory factory = (DTWorkspaceFactory) doc
 					.getRootElement().getTarget(true);
 

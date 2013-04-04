@@ -1,7 +1,7 @@
 package ananas.lib.dtml.dom;
 
-import ananas.lib.blueprint3.core.dom.BPAttribute;
-import ananas.lib.blueprint3.core.util.attribute_helper.AttrUtil;
+import ananas.lib.blueprint3.dom.BPAttribute;
+import ananas.lib.blueprint3.util.attribute_helper.AttrUtil;
 
 public class C_node extends C_object {
 

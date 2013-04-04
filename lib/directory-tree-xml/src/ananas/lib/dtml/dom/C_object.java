@@ -1,7 +1,7 @@
 package ananas.lib.dtml.dom;
 
-import ananas.lib.blueprint3.core.dom.BPAttribute;
-import ananas.lib.blueprint3.core.lang.CObject;
+import ananas.lib.blueprint3.dom.BPAttribute;
+import ananas.lib.blueprint3.lang.CObject;
 
 public class C_object extends CObject {
 
