@@ -1,6 +1,7 @@
 package ananas.lib.dtml.dom;
 
 import ananas.lib.blueprint3.dom.BPAttribute;
+import ananas.lib.blueprint3.dom.BPDocument;
 
 public class C_template extends C_object {
 
@@ -23,7 +24,8 @@ public class C_template extends C_object {
 	public void onTagEnd() {
 		super.onTagEnd();
 		String uri = this.m_attr_main.getValue();
-		T_node main = (T_node) this.getOwnerDocument().findTargetByURI(uri);
+		BPDocument doc = this.getOwnerDocument();
+		T_node main = (T_node) doc.findTargetByURI(uri);
 		this.target_template().setMain(main);
 	}
 }

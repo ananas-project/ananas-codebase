@@ -18,4 +18,16 @@ public class T_node extends T_object {
 		this.mParent = parent;
 	}
 
+	public boolean isRequired() {
+		return mRequired;
+	}
+
+	public String getName() {
+		return mName;
+	}
+
+	public T_dir getParent() {
+		return mParent;
+	}
+
 }

@@ -4,17 +4,18 @@
 
 	<dir id="working_dir">
 
-		<dir name=".git">
-			<dir name="objects"></dir>
+		<dir name=".xgit">
+			<dir name="objects" required="true"></dir>
+			<dir name="extends" optional="true"></dir>
 			<dir name="branches"></dir>
 			<dir name="refs"></dir>
 			<file name="config" />
 		</dir>
 
 		<dir name=".snowflake" id="works">
-			<dir name="shadows"></dir>
+			<dir name="shadows" id="shadows_dir"></dir>
 			<dir name="local"></dir>
-			<file name=".gitignore" />
+			<file id="ignore_file" name=".xgitignore" />
 		</dir>
 
 	</dir>

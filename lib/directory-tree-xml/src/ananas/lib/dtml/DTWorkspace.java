@@ -1,10 +1,14 @@
 package ananas.lib.dtml;
 
+import java.util.List;
+
 public interface DTWorkspace extends DTNode {
 
-	DTFile getFileById(String id);
+	DTFile findFileById(String id);
 
-	DTDirectory getDirectoryById(String id);
+	DTDirectory findDirectoryById(String id);
 
 	DTWorkspaceFactory getFactory();
+
+	List<DTNode> listNodes();
 }

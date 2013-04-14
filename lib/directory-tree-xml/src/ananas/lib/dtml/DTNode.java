@@ -8,6 +8,8 @@ public interface DTNode {
 
 	VFile getFile();
 
+	String getId();
+
 	boolean init();
 
 	boolean check();

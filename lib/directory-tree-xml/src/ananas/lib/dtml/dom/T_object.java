@@ -8,4 +8,8 @@ public class T_object {
 		this.mId = id;
 	}
 
+	public String getId() {
+		return mId;
+	}
+
 }

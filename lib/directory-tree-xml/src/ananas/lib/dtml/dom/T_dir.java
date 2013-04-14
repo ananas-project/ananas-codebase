@@ -14,4 +14,8 @@ public class T_dir extends T_node {
 		this.m_child_list.add(child);
 	}
 
+	public List<T_node> listChildren() {
+		return this.m_child_list;
+	}
+
 }
