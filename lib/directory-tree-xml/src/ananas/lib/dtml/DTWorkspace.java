@@ -8,6 +8,8 @@ public interface DTWorkspace extends DTNode {
 
 	DTDirectory findDirectoryById(String id);
 
+	DTNode findNodeById(String id);
+
 	DTWorkspaceFactory getFactory();
 
 	List<DTNode> listNodes();

@@ -182,6 +182,11 @@ public class DTWorkspaceBuilder {
 			return core.listNodes();
 		}
 
+		@Override
+		public DTNode findNodeById(String id) {
+			return this.core.findNodeById(id);
+		}
+
 	}
 
 	class WorkspaceCore implements DTWorkspace {
@@ -273,6 +278,11 @@ public class DTWorkspaceBuilder {
 		@Override
 		public List<DTNode> listNodes() {
 			return new ArrayList<DTNode>(this.mNodeList);
+		}
+
+		@Override
+		public DTNode findNodeById(String id) {
+			return this.mNodeMap.get(id);
 		}
 	}
 
