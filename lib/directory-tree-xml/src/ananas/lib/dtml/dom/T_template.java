@@ -2,7 +2,7 @@ package ananas.lib.dtml.dom;
 
 import ananas.lib.dtml.DTWorkspace;
 import ananas.lib.dtml.DTWorkspaceFactory;
-import ananas.lib.dtml.impl.DTWorkspaceBuilder;
+import ananas.lib.dtml.impl.DTWorkspaceBuilder2;
 import ananas.lib.io.vfs.VFile;
 
 public class T_template implements DTWorkspaceFactory {
@@ -16,7 +16,7 @@ public class T_template implements DTWorkspaceFactory {
 
 	@Override
 	public DTWorkspace createWorkspace(VFile file) {
-		DTWorkspaceBuilder builder = new DTWorkspaceBuilder(this, file);
+		DTWorkspaceBuilder2 builder = new DTWorkspaceBuilder2(this, file);
 		return builder.build();
 	}
 
