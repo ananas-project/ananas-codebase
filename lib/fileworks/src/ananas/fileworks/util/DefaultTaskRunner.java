@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Vector;
 
 import ananas.fileworks.Component;
+import ananas.fileworks.ComponentFactory;
+import ananas.fileworks.Context;
 import ananas.fileworks.task.Task;
 import ananas.fileworks.task.TaskRunner;
 
@@ -89,6 +91,14 @@ public class DefaultTaskRunner implements TaskRunner, Component {
 			return null;
 		}
 
+	}
+
+	public static class Factory implements ComponentFactory {
+
+		@Override
+		public Component createComponent(Context context) {
+			return new DefaultTaskRunner();
+		}
 	}
 
 }

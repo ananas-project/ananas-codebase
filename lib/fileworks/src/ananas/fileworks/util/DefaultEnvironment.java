@@ -13,7 +13,7 @@ public class DefaultEnvironment implements Environment {
 		ComponentRegistrar cr = new DefaultComponentRegistrar();
 		this.mCompReg = cr;
 		ComponentManager cm = new DefaultComponentManager();
-		this.mAutoCompMan = new AutoComponentManager(cr, cm);
+		this.mAutoCompMan = new AutoComponentManager(null, cr, cm);
 	}
 
 	@Override

@@ -2,10 +2,10 @@ package ananas.fileworks;
 
 public interface ComponentRegistrar {
 
-	void register(Class<?> api, Class<?> aClass);
+	void register(Class<?> api, Class<?> aFactoryClass);
 
-	Class<?> getComponentClass(Class<?> api);
+	ComponentFactory getFactory(Class<?> api);
 
-	Component createComponent(Class<?> api);
+	Component create(Context context, Class<?> api);
 
 }

@@ -20,7 +20,7 @@ public class DefaultContext implements Context {
 		this.mMainPath = path;
 		ComponentManager cm = new DefaultComponentManager();
 		ComponentRegistrar cr = envi.getComponentRegistrar();
-		this.mAutoCompMan = new AutoComponentManager(cr, cm);
+		this.mAutoCompMan = new AutoComponentManager(this, cr, cm);
 	}
 
 	@Override

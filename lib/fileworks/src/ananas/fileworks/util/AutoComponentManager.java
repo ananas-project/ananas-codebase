@@ -3,15 +3,19 @@ package ananas.fileworks.util;
 import ananas.fileworks.Component;
 import ananas.fileworks.ComponentManager;
 import ananas.fileworks.ComponentRegistrar;
+import ananas.fileworks.Context;
 
 public class AutoComponentManager implements ComponentManager {
 
 	private final ComponentRegistrar mCompReg;
 	private final ComponentManager mCompMngr;
+	private final Context mContext;
 
-	public AutoComponentManager(ComponentRegistrar cr, ComponentManager cm) {
+	public AutoComponentManager(Context context, ComponentRegistrar cr,
+			ComponentManager cm) {
 		this.mCompReg = cr;
 		this.mCompMngr = cm;
+		this.mContext = context;
 	}
 
 	@Override
@@ -19,7 +23,7 @@ public class AutoComponentManager implements ComponentManager {
 		Component comp = this.mCompMngr.get(api, name);
 		if (comp == null) {
 			if (this.mCompMngr.hasDeclare(api, name)) {
-				comp = this.mCompReg.createComponent(api);
+				comp = this.mCompReg.create(this.mContext, api);
 				if (comp != null) {
 					this.mCompMngr.put(api, name, comp);
 				}
