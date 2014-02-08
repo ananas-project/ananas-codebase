@@ -138,6 +138,8 @@ public class MainFrame extends JFrame {
 		ff.find(path, filter, h);
 
 		this._output.setText(h.output);
+		this._output.setSelectionStart(0);
+		this._output.setSelectionEnd(0);
 
 	}
 
