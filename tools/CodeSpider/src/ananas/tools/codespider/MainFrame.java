@@ -3,6 +3,8 @@ package ananas.tools.codespider;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -35,14 +37,21 @@ public class MainFrame extends JFrame {
 
 	}
 
-	interface Menu {
+	interface Command {
 
 		String open = "open";
+		String settings = "settings";
 
 	}
 
 	private JFileChooser _file_chooser;
 	private JTextArea _output;
+	private final List<String> _suffix_list;
+
+	private MainFrame() {
+		this._suffix_list = new ArrayList<String>();
+		this._suffix_list.add(".java");
+	}
 
 	protected void onInit() {
 
@@ -67,7 +76,8 @@ public class MainFrame extends JFrame {
 		{
 			JMenu menu = new JMenu("File");
 			mb.add(menu);
-			menu.add(this.createMenuItem(Menu.open));
+			menu.add(this.createMenuItem(Command.open));
+			menu.add(this.createMenuItem(Command.settings));
 		}
 
 		return mb;
@@ -92,9 +102,19 @@ public class MainFrame extends JFrame {
 
 	protected void onClickMenuItem(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (Menu.open.equals(cmd)) {
+		if (cmd == null) {
+		} else if (cmd.equals(Command.open)) {
 			this.onClickOpen();
+		} else if (cmd.equals(Command.settings)) {
+			this.onClickSettings();
 		}
+	}
+
+	private void onClickSettings() {
+		SettingsDialog dlg = new SettingsDialog();
+		dlg.onInit(this._suffix_list);
+		dlg.setModal(true);
+		dlg.setVisible(true);
 	}
 
 	private void onClickOpen() {
@@ -132,6 +152,8 @@ public class MainFrame extends JFrame {
 			}
 		};
 
+		filter = new MyFilter(this._suffix_list);
+
 		ResultSet h = new ResultSet();
 
 		FileFinder ff = new FileFinder();
@@ -141,6 +163,30 @@ public class MainFrame extends JFrame {
 		this._output.setSelectionStart(0);
 		this._output.setSelectionEnd(0);
 
+	}
+
+	class MyFilter implements FileFilter {
+
+		private final String[] _sl;
+
+		public MyFilter(List<String> suffixList) {
+			this._sl = suffixList.toArray(new String[suffixList.size()]);
+		}
+
+		@Override
+		public boolean accept(File path) {
+			if (path.isDirectory()) {
+				return true;
+			} else {
+				final String name = path.getName().toLowerCase();
+				for (String suffix : _sl) {
+					if (name.endsWith(suffix)) {
+						return true;
+					}
+				}
+				return false;
+			}
+		}
 	}
 
 }
