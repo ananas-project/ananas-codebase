@@ -96,10 +96,17 @@ public class ResultSet implements FileHandler {
 		sb.append("find " + count_patt + " pattern(s)" + endl);
 		sb.append(endl);
 
+		boolean overflow = false;
 		for (int i = 0; i < count_patt; ++i) {
 			MyLinePattern patt = list.get(i);
 			String str = i + ". [x" + patt._count + "] " + patt._string;
-			sb.append(str + endl);
+			if (i < (1024 * 8))
+				sb.append(str + endl);
+			else
+				overflow = true;
+		}
+		if (overflow) {
+			sb.append("(has more ...)" + endl);
 		}
 
 		System.out.println(sb);
